@@ -12,6 +12,15 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
+// Route segment config to handle larger payloads
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '10mb',
+        },
+    },
+};
+
 export async function PUT(request) {
     try {
         const { userId } = getAuth(request)
@@ -40,10 +49,10 @@ export async function PUT(request) {
         }
 
         await connectDB()
-        
+
         // Find the product to update
         const product = await Product.findById(productId);
-        
+
         if (!product) {
             return NextResponse.json({ success: false, message: 'Product not found' }, { status: 404 })
         }
@@ -54,10 +63,10 @@ export async function PUT(request) {
         }
 
         let image = [];
-        
+
         // Check if we have new images to upload
         const files = formData.getAll('images');
-        
+
         if (files && files.length > 0) {
             // Upload new images
             const result = await Promise.all(
@@ -107,10 +116,10 @@ export async function PUT(request) {
             { new: true } // Return the updated document
         );
 
-        return NextResponse.json({ 
-            success: true, 
-            message: 'Product updated successfully', 
-            product: updatedProduct 
+        return NextResponse.json({
+            success: true,
+            message: 'Product updated successfully',
+            product: updatedProduct
         })
 
     } catch (error) {

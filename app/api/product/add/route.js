@@ -12,6 +12,15 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
+// Route segment config to handle larger payloads
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '10mb',
+        },
+    },
+};
+
 export async function POST(request) {
     try {
         const { userId } = getAuth(request)
