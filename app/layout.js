@@ -46,9 +46,9 @@ const parisienne = Parisienne({
 });
 
 export const metadata = {
-  title: "SEARCH BAGS - Premium Bag Manufacturer & Wholesaler",
+  title: "Laina Bags - Premium Bag Manufacturer & Wholesaler | Since 2010",
   description:
-    "Established in 2007, Search Bag is a leading manufacturer and wholesaler of premium messenger bags, backpacks, and more. Find the perfect bag for every occasion.",
+    "Established in 2010, Laina Bags is Mumbai's trusted manufacturer and wholesaler of premium soft luggage, backpacks, and bags. Quality craftsmanship at competitive prices.",
   robots: {
     index: true,
     follow: true,
@@ -60,7 +60,7 @@ export const metadata = {
     },
   },
   alternates: {
-    canonical: 'https://www.searchbag.in',
+    canonical: 'https://www.lainabags.com',
   },
 };
 
@@ -77,22 +77,118 @@ export default function RootLayout({ children }) {
       className={`${poppins.variable} ${inter.variable} ${cormorant.variable} ${parisienne.variable}`}
     >
       <head>
-        <link rel="icon" type="image/png" href="/images/search.png" />
-        <title>SEARCH BAGS - Premium Bag Manufacturer & Wholesaler</title>
+        {/* Favicon */}
+        <link rel="icon" type="image/png" href="/images/logo.png" />
+        <link rel="apple-touch-icon" href="/images/logo.png" />
+
+        {/* Primary Meta Tags */}
+        <title>Laina Bags - Premium Bag Manufacturer & Wholesaler | Mumbai</title>
         <meta
           name="description"
-          content="Established in 2007, Search Bag is a leading manufacturer and wholesaler of premium messenger bags, backpacks, and more. Find the perfect bag for every occasion."
+          content="Established in 2010, Laina Bags is Mumbai's trusted manufacturer and wholesaler of premium soft luggage, backpacks, laptop bags, hiking bags, and duffel bags. Quality craftsmanship at competitive prices."
         />
+        <meta name="keywords" content="bags manufacturer Mumbai, wholesale bags India, backpacks manufacturer, laptop bags wholesale, hiking bags, duffel bags, premium bags Mumbai, bag factory Mumbai, soft luggage manufacturer, Laina Bags, Byculla bags" />
+        <meta name="author" content="Laina Bags" />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-        <link rel="canonical" href="https://www.searchbag.in" />
+        <meta name="googlebot" content="index, follow" />
+        <meta name="google-site-verification" content="zQi-1ECEzquaV5q4ZCcZa74q1a1hnzPi-3t8IxKBMsw" />
+        <link rel="canonical" href="https://www.lainabags.com" />
+
+        {/* Geo Tags */}
+        <meta name="geo.region" content="IN-MH" />
+        <meta name="geo.placename" content="Mumbai" />
+        <meta name="geo.position" content="18.9712;72.8147" />
+        <meta name="ICBM" content="18.9712, 72.8147" />
+
+        {/* Open Graph / Facebook */}
         <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="SEARCH BAGS - Premium Bag Manufacturer & Wholesaler" />
-        <meta property="og:description" content="Established in 2007, Search Bag is a leading manufacturer and wholesaler of premium messenger bags, backpacks, and more. Find the perfect bag for every occasion." />
-        <meta property="og:url" content="https://www.searchbag.in" />
-        <meta property="og:site_name" content="SEARCH BAGS" />
-        <meta property="og:image" content="https://www.searchbag.in/images/search.png" />
+        <meta property="og:title" content="Laina Bags - Premium Bag Manufacturer & Wholesaler | Mumbai" />
+        <meta property="og:description" content="Established in 2010, Laina Bags is Mumbai's trusted manufacturer and wholesaler of premium soft luggage, backpacks, laptop bags, hiking bags, and duffel bags. Quality craftsmanship at competitive prices." />
+        <meta property="og:url" content="https://www.lainabags.com" />
+        <meta property="og:site_name" content="Laina Bags" />
+        <meta property="og:image" content="https://www.lainabags.com/images/logo.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Laina Bags - Premium Bag Manufacturer & Wholesaler" />
+        <meta name="twitter:description" content="Mumbai's trusted manufacturer of premium bags since 2010. Quality craftsmanship at competitive prices." />
+        <meta name="twitter:image" content="https://www.lainabags.com/images/logo.png" />
+
+        {/* Structured Data - Local Business */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Laina Bags",
+            "image": "https://www.lainabags.com/images/logo.png",
+            "@id": "https://www.lainabags.com",
+            "url": "https://www.lainabags.com",
+            "telephone": "+917045010589",
+            "priceRange": "$$",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Room No. 1, Chawl 12, Byculla Station Rd, Near Star of India Hotel",
+              "addressLocality": "Byculla",
+              "addressRegion": "Mumbai",
+              "postalCode": "400011",
+              "addressCountry": "IN"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 18.9712,
+              "longitude": 72.8147
+            },
+            "openingHoursSpecification": {
+              "@type": "OpeningHoursSpecification",
+              "dayOfWeek": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+              ],
+              "opens": "09:00",
+              "closes": "21:00"
+            },
+            "sameAs": [
+              "https://www.facebook.com/lainabags",
+              "https://www.instagram.com/lainabags"
+            ]
+          })}
+        </script>
+
+        {/* Structured Data - Organization */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Laina Bags",
+            "url": "https://www.lainabags.com",
+            "logo": "https://www.lainabags.com/images/logo.png",
+            "foundingDate": "2010",
+            "description": "Premium bag manufacturer and wholesaler in Mumbai, India. Specializing in backpacks, laptop bags, hiking bags, and duffel bags.",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "Room No. 1, Chawl 12, Byculla Station Rd",
+              "addressLocality": "Mumbai",
+              "addressRegion": "Maharashtra",
+              "postalCode": "400011",
+              "addressCountry": "IN"
+            },
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "telephone": "+917045010589",
+              "contactType": "customer service",
+              "areaServed": "IN",
+              "availableLanguage": ["English", "Hindi"]
+            }
+          })}
+        </script>
       </head>
       <body style={mainBgStyle}>
         <ClerkProvider>

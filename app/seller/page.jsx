@@ -20,7 +20,7 @@ const AddProduct = () => {
   const [category, setCategory] = useState("Backpack");
   const [price, setPrice] = useState("");
   const [offerPrice, setOfferPrice] = useState("");
-  const [whatsappNumber, setWhatsappNumber] = useState("+919326123535");
+  const [whatsappNumber, setWhatsappNumber] = useState("+917045010589");
   const [colors, setColors] = useState([]);
   const [colorInput, setColorInput] = useState("");
   const [isEditing, setIsEditing] = useState(false);
@@ -43,7 +43,7 @@ const AddProduct = () => {
       const { data } = await axios.get(apiUrl, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      
+
       if (data.success) {
         const product = data.product;
         setName(product.name || "");
@@ -203,7 +203,7 @@ const AddProduct = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-300"
+                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
                   placeholder="Enter product name"
                 />
               </div>
@@ -218,7 +218,7 @@ const AddProduct = () => {
                   onChange={(e) => setDescription(e.target.value)}
                   required
                   rows={4}
-                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-300"
+                  className="w-full px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
                   placeholder="Enter product description"
                 />
               </div>
@@ -234,13 +234,12 @@ const AddProduct = () => {
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-300 appearance-none bg-white"
+                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 appearance-none bg-white"
                   >
                     <option value="Backpack">Backpack</option>
                     <option value="Laptop Bag">Laptop Bag</option>
-                    <option value="Sling Bag">Sling Bag</option>
+                    <option value="Sling Bag">Hiking Bag</option>
                     <option value="Duffel Bag">Duffel Bag</option>
-                    <option value="Gym Bag">Gym Bag</option>
                     <option value="Accessories">Accessories</option>
                     <option value="Complementary Items">Complementary Items</option>
                   </select>
@@ -260,7 +259,7 @@ const AddProduct = () => {
                     onChange={(e) => setPrice(e.target.value)}
                     required
                     min="0"
-                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-300"
+                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
                     placeholder="Enter price"
                   />
                 </div>
@@ -279,7 +278,7 @@ const AddProduct = () => {
                     onChange={(e) => setOfferPrice(e.target.value)}
                     required
                     min="0"
-                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-300"
+                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
                     placeholder="Enter offer price"
                   />
                 </div>
@@ -297,7 +296,7 @@ const AddProduct = () => {
                     value={whatsappNumber}
                     onChange={(e) => setWhatsappNumber(e.target.value)}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition duration-300"
+                    className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
                     placeholder="Enter WhatsApp number with country code"
                   />
                 </div>
@@ -330,9 +329,9 @@ const AddProduct = () => {
                     </button>
                   </div>
                 ))}
-                <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-sky-50 hover:border-sky-400 transition-all group">
-                  <Upload className="w-6 h-6 text-slate-400 group-hover:text-sky-600 mb-1" />
-                  <span className="text-xs font-bold text-slate-600 group-hover:text-sky-600">Upload</span>
+                <label className="flex flex-col items-center justify-center w-24 h-24 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer hover:bg-blue-50 hover:border-blue-400 transition-all group">
+                  <Upload className="w-6 h-6 text-slate-400 group-hover:text-blue-600 mb-1" />
+                  <span className="text-xs font-bold text-slate-600 group-hover:text-blue-600">Upload</span>
                   <input
                     type="file"
                     className="hidden"
@@ -359,7 +358,7 @@ const AddProduct = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-8 py-3 bg-sky-600 text-white rounded-xl font-black text-sm hover:bg-sky-700 transition-all shadow-xl hover:shadow-2xl disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-w-[140px]"
+                className="px-8 py-3 bg-blue-600 text-white rounded-xl font-black text-sm hover:bg-blue-700 transition-all shadow-xl hover:shadow-2xl disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2 min-w-[140px]"
               >
                 {isSubmitting ? (
                   <>

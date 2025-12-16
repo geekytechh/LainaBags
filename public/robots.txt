@@ -1,12 +1,11 @@
 # *
 User-agent: *
 Allow: /
-Disallow: /seller
-Disallow: /api
 
-# Host
-Host: https://www.searchbag.in
+# Disallow admin and seller areas
+User-agent: *
+Disallow: /seller/
+Disallow: /api/
 
-# Sitemaps
-Sitemap: https://www.searchbag.in/sitemap.xml
-Sitemap: https://www.searchbag.in/sitemap-0.xml
+# Sitemap
+Sitemap: https://www.lainabags.com/sitemap.xml

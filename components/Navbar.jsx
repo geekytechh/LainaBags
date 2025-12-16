@@ -14,8 +14,6 @@ import {
   Phone,
   Mail,
   ShoppingBag,
-  Sparkles,
-  ChevronDown,
 } from "lucide-react";
 
 const Navbar = () => {
@@ -86,163 +84,157 @@ const Navbar = () => {
   return (
     <>
       {/* Top Bar */}
-      <div className="hidden bg-sky-50 border-b border-sky-100 text-sky-700 text-xs font-medium py-2 md:block">
-        <div className="container mx-auto px-6 flex justify-center items-center gap-6">
-          <a href="tel:+919326123535" className="flex items-center gap-1.5 hover:text-sky-600 transition-colors">
-            <Phone className="w-3.5 h-3.5" />
-            <span>+91 93261 23535</span>
-          </a>
-          <div className="w-px h-3 bg-sky-200"></div>
-          <a href="mailto:support@lainabags.com" className="flex items-center gap-1.5 hover:text-sky-600 transition-colors">
-            <Mail className="w-3.5 h-3.5" />
-            <span>support@lainabags.com</span>
-          </a>
+      <div className="relative overflow-hidden bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 border-b border-blue-700/30">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-64 h-64 bg-blue-400 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        </div>
+
+        <div className="container mx-auto px-4 py-2 relative z-10">
+          {/* Desktop View */}
+          <div className="hidden md:flex justify-center items-center gap-6">
+            <a href="tel:+919987225041" className="flex items-center gap-2 text-blue-100 hover:text-white transition-all duration-200 group">
+              <Phone className="w-3.5 h-3.5" />
+              <span className="text-xs font-bold">+91 99872 25041</span>
+            </a>
+            <div className="w-px h-4 bg-blue-300/60"></div>
+            <a href="tel:+917045010589" className="flex items-center gap-2 text-blue-100 hover:text-white transition-all duration-200 group">
+              <Phone className="w-3.5 h-3.5" />
+              <span className="text-xs font-bold">+91 70450 10589</span>
+            </a>
+            <div className="w-px h-4 bg-blue-300/60"></div>
+            <a href="mailto:info@lainabags.com" className="flex items-center gap-2 text-blue-100 hover:text-white transition-all duration-200 group">
+              <Mail className="w-3.5 h-3.5" />
+              <span className="text-xs font-bold">info@lainabags.com</span>
+            </a>
+          </div>
+
+          {/* Mobile View */}
+          <div className="flex md:hidden justify-center items-center gap-4 text-xs">
+            <a href="tel:+919987225041" className="flex items-center gap-1.5 text-blue-100 hover:text-white">
+              <Phone className="w-3 h-3" />
+              <span className="font-bold">+91 99872 25041</span>
+            </a>
+            <div className="w-px h-3 bg-blue-300/60"></div>
+            <a href="mailto:info@lainabags.com" className="flex items-center gap-1.5 text-blue-100 hover:text-white">
+              <Mail className="w-3 h-3" />
+              <span className="font-bold">Email</span>
+            </a>
+          </div>
         </div>
       </div>
 
       {/* Main Navbar */}
-      <nav className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? "bg-white/95 backdrop-blur-xl shadow-md border-b border-sky-100" 
-          : "bg-white/90 backdrop-blur-sm"
-      }`}>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
-            {/* Logo */}
+      <nav className={`sticky top-0 z-50 transition-all duration-500 relative ${scrolled ? "bg-white shadow-xl" : "bg-white/95"
+        }`}>
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-100/20 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-blue-100/20 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex items-center justify-between h-16 lg:h-18">
+            {/* Premium Logo - With Hover Animation */}
             <Link
               href="/"
-              className="flex items-center gap-2.5 group flex-shrink-0"
+              className="flex items-center gap-2.5 flex-shrink-0 relative group"
             >
-              <div className="relative">
-                <div className="absolute inset-0 bg-sky-100 rounded-xl blur-md opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <div className="relative w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-sky-50 to-sky-100 border border-sky-200 p-1.5 transition-transform duration-300 group-hover:scale-105">
-                  <Image
-                    src="/images/search.png"
-                    alt="Laina Bags"
-                    fill
-                    className="object-contain"
-                  />
-                </div>
+              <div className="relative w-10 h-10 lg:w-12 lg:h-12 transition-transform duration-300 group-hover:scale-110">
+                <Image
+                  src="/images/logobg.png"
+                  alt="Laina Bags"
+                  fill
+                  className="object-contain"
+                />
               </div>
+
               <div className="flex flex-col">
-                <span className="text-xl lg:text-2xl font-black text-slate-900 leading-tight">Laina Bags</span>
-                <span className="text-[9px] font-bold text-sky-600 uppercase tracking-wider">Premium Quality</span>
+                <span className="text-lg lg:text-xl font-black bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 bg-clip-text text-transparent leading-tight tracking-tight transition-all duration-300 group-hover:from-blue-700 group-hover:via-blue-600 group-hover:to-blue-700">
+                  Laina Bags
+                </span>
               </div>
             </Link>
-
-            {/* Desktop Navigation - Centered */}
+            {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
               {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  href={link.path}
-                  className="relative px-4 py-2 text-sm font-semibold text-slate-700 hover:text-sky-600 transition-colors duration-200 rounded-lg hover:bg-sky-50"
-                >
-                  {link.label}
+                <Link key={link.path} href={link.path} className="relative px-5 py-2 text-sm font-bold text-slate-700 hover:text-blue-700 transition-all duration-300 group">
+                  <span className="relative z-10">{link.label}</span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-blue-50 via-blue-100 to-blue-50 rounded-full opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100 transition-all duration-300"></span>
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 bg-blue-600 group-hover:w-8 transition-all duration-300 rounded-full"></span>
                 </Link>
               ))}
             </div>
 
             {/* Right Actions */}
             <div className="flex items-center gap-2 lg:gap-3">
-              {/* Search */}
               <div className="relative" ref={searchRef}>
-                <button
-                  onClick={() => setIsSearchOpen(!isSearchOpen)}
-                  className="p-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition-all duration-200"
-                >
+                <button onClick={() => setIsSearchOpen(!isSearchOpen)} className="p-2 rounded-xl text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-all">
                   <Search className="w-5 h-5" />
                 </button>
-                
+
+                {/* Search Modal - Centered on Mobile */}
                 {isSearchOpen && (
-                  <div className="absolute top-full right-0 mt-2 w-[90vw] sm:w-96 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50">
-                    <div className="p-4 border-b border-slate-100">
-                      <div className="relative">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                        <input
-                          ref={searchInputRef}
-                          type="text"
-                          placeholder="Search products..."
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-sm"
-                        />
+                  <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 sm:relative sm:inset-auto sm:pt-0 sm:px-0">
+                    {/* Mobile Backdrop */}
+                    <div className="fixed inset-0 bg-black/20 sm:hidden" onClick={() => setIsSearchOpen(false)}></div>
+
+                    {/* Search Container */}
+                    <div className="relative w-full max-w-md sm:absolute sm:top-full sm:right-0 sm:mt-3 sm:w-[420px] bg-white rounded-2xl shadow-2xl border-2 border-blue-100 overflow-hidden">
+                      <div className="p-4 border-b border-blue-50 bg-blue-50/50">
+                        <div className="relative">
+                          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-blue-500" />
+                          <input ref={searchInputRef} type="text" placeholder="Search bags..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full pl-10 pr-4 py-3 rounded-xl border-2 border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm font-semibold bg-white" />
+                        </div>
                       </div>
-                    </div>
-                    {searchResults.length > 0 ? (
-                      <div className="max-h-80 overflow-y-auto">
-                        {searchResults.map((product) => (
-                          <div
-                            key={product._id}
-                            className="p-3 hover:bg-sky-50 cursor-pointer border-b border-slate-100 last:border-0 transition-colors"
-                            onClick={() => {
-                              router.push(`/product/${product._id}`);
-                              setIsSearchOpen(false);
-                              setSearchQuery("");
-                            }}
-                          >
-                            <div className="flex gap-3 items-center">
-                              <Image
-                                src={product.images?.[0] || product.image?.[0]}
-                                alt={product.name}
-                                width={50}
-                                height={50}
-                                className="object-cover rounded-lg"
-                              />
-                              <div className="flex-1 min-w-0">
-                                <h4 className="text-sm font-semibold text-slate-900 truncate">{product.name}</h4>
-                                <p className="text-xs text-slate-500">{product.category}</p>
+
+                      {searchResults.length > 0 ? (
+                        <div className="max-h-96 overflow-y-auto">
+                          {searchResults.map((product) => (
+                            <div key={product._id} className="p-3 hover:bg-blue-50 cursor-pointer border-b border-blue-50/50 last:border-0" onClick={() => { router.push(`/product/${product._id}`); setIsSearchOpen(false); setSearchQuery(""); }}>
+                              <div className="flex gap-3 items-center">
+                                <div className="relative w-14 h-14 rounded-lg overflow-hidden ring-2 ring-blue-100">
+                                  <Image src={product.images?.[0] || product.image?.[0]} alt={product.name} fill className="object-cover" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="text-sm font-bold text-slate-900 truncate">{product.name}</h4>
+                                  <p className="text-xs text-slate-500 font-semibold">{product.category}</p>
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                    ) : searchQuery && (
-                      <div className="p-4 text-center text-sm text-slate-500">No results found</div>
-                    )}
+                          ))}
+                        </div>
+                      ) : searchQuery && (
+                        <div className="p-8 text-center">
+                          <Search className="w-12 h-12 mx-auto mb-2 text-blue-300" />
+                          <p className="text-sm font-bold text-slate-600">No results found</p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
               </div>
 
-              {/* WhatsApp */}
-              <a
-                href="https://wa.me/919326123535"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl text-sm font-semibold shadow-lg hover:shadow-xl hover:from-green-600 hover:to-green-700 transition-all duration-200"
-              >
+              <a href="https://wa.me/917045010589" target="_blank" rel="noopener noreferrer" className="hidden sm:flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-xl text-sm font-bold hover:bg-green-700 transition-all">
                 <MessageCircle className="w-4 h-4" />
-                <span>Order Now</span>
+                <span>Order</span>
               </a>
 
-              {/* Account */}
               {user ? (
                 <UserButton afterSignOutUrl="/" />
               ) : (
-                <button
-                  onClick={openSignIn}
-                  className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-slate-700 hover:text-sky-600 hover:bg-sky-50 transition-all duration-200"
-                >
+                <button onClick={openSignIn} className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold text-slate-700 hover:text-blue-700 hover:bg-blue-50 transition-all">
                   <User className="w-5 h-5" />
                 </button>
               )}
 
-              {/* Seller Dashboard */}
               {isSeller && (
-                <button
-                  onClick={() => router.push("/seller")}
-                  className="hidden sm:flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-xl text-sm font-semibold shadow-lg hover:bg-sky-700 transition-all duration-200"
-                >
+                <button onClick={() => router.push("/seller")} className="hidden sm:flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-bold hover:bg-blue-700 transition-all">
                   <ShoppingBag className="w-4 h-4" />
                   <span>Seller</span>
                 </button>
               )}
 
-              {/* Mobile Menu */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 rounded-lg text-slate-600 hover:text-sky-600 hover:bg-sky-50 transition-all duration-200"
-              >
+              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="lg:hidden p-2 rounded-xl text-slate-600 hover:text-blue-700 hover:bg-blue-50 transition-all">
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
             </div>
@@ -251,25 +243,14 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-sky-100 bg-white">
+          <div className="lg:hidden border-t border-blue-100 bg-white">
             <div className="container mx-auto px-4 py-4 space-y-1">
               {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  href={link.path}
-                  className="block py-3 px-4 text-base font-semibold text-slate-700 hover:text-sky-600 hover:bg-sky-50 rounded-lg transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
+                <Link key={link.path} href={link.path} className="block py-2.5 px-4 text-base font-bold text-slate-700 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all" onClick={() => setMobileMenuOpen(false)}>
                   {link.label}
                 </Link>
               ))}
-              <a
-                href="https://wa.me/919326123535"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 py-3 px-4 text-base font-semibold text-white bg-gradient-to-r from-green-500 to-green-600 rounded-lg"
-                onClick={() => setMobileMenuOpen(false)}
-              >
+              <a href="https://wa.me/917045010589" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 py-2.5 px-4 text-base font-bold text-white bg-green-600 rounded-lg hover:bg-green-700 transition-all" onClick={() => setMobileMenuOpen(false)}>
                 <MessageCircle className="w-5 h-5" />
                 <span>Order on WhatsApp</span>
               </a>

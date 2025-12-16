@@ -4,190 +4,125 @@ import Image from "next/image";
 import {
   Facebook,
   Instagram,
+  Twitter,
   MapPin,
   Phone,
   Mail,
-  Clock,
   MessageCircle,
-  Linkedin,
-  Award,
-  Truck,
-  Shield,
-  Sparkles,
 } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="relative bg-slate-900 text-white overflow-hidden">
-      {/* Background Pattern */}
-      <div 
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V4h4V2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V4h4V2H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}
-      ></div>
-
-      {/* Trust Badges */}
-      <div className="relative border-b border-white/10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="flex flex-col items-center text-center">
-              <div className="w-14 h-14 rounded-xl bg-sky-500/20 flex items-center justify-center mb-3 border border-sky-400/30">
-                <Truck className="w-7 h-7 text-sky-400" />
-              </div>
-              <h4 className="text-sm font-bold mb-1">Free Shipping</h4>
-              <p className="text-xs text-slate-400">Above ₹2000</p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="w-14 h-14 rounded-xl bg-sky-500/20 flex items-center justify-center mb-3 border border-sky-400/30">
-                <Shield className="w-7 h-7 text-sky-400" />
-              </div>
-              <h4 className="text-sm font-bold mb-1">Premium Quality</h4>
-              <p className="text-xs text-slate-400">Since 2007</p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="w-14 h-14 rounded-xl bg-sky-500/20 flex items-center justify-center mb-3 border border-sky-400/30">
-                <Award className="w-7 h-7 text-sky-400" />
-              </div>
-              <h4 className="text-sm font-bold mb-1">Expert Craft</h4>
-              <p className="text-xs text-slate-400">Handcrafted</p>
-            </div>
-            <div className="flex flex-col items-center text-center">
-              <div className="w-14 h-14 rounded-xl bg-sky-500/20 flex items-center justify-center mb-3 border border-sky-400/30">
-                <MessageCircle className="w-7 h-7 text-sky-400" />
-              </div>
-              <h4 className="text-sm font-bold mb-1">24/7 Support</h4>
-              <p className="text-xs text-slate-400">Always Here</p>
-            </div>
-          </div>
-        </div>
+    <footer className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
+      {/* Top Wave */}
+      <div className="absolute top-0 left-0 right-0 -mt-1">
+        <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto rotate-180" preserveAspectRatio="none">
+          <path d="M0,50 C240,80 480,20 720,50 C960,80 1200,20 1440,50 L1440,100 L0,100 Z" fill="white" />
+        </svg>
       </div>
 
-      {/* Main Content */}
-      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+      {/* Background Graphics */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-400 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-80 h-80 bg-blue-500 rounded-full blur-3xl"></div>
+      </div>
+
+      {/* Geometric Pattern */}
+      <div className="absolute inset-0 opacity-5" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h60v60H0z' fill='none'/%3E%3Cpath d='M30 0L60 30L30 60L0 30z' fill='%23ffffff' opacity='0.1'/%3E%3C/svg%3E")`
+      }}></div>
+
+      <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-20">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
-          <div>
-            <Link href="/" className="flex items-center gap-2.5 mb-6 group">
-              <div className="relative">
-                <div className="absolute inset-0 bg-sky-500/20 rounded-xl blur-md opacity-0 group-hover:opacity-50 transition-opacity"></div>
-                <div className="relative w-12 h-12 rounded-xl bg-gradient-to-br from-sky-50 to-sky-100 border border-sky-200 p-1.5">
-                  <Image
-                    src="/images/search.png"
-                    alt="Laina Bags"
-                    width={40}
-                    height={40}
-                    className="object-contain"
-                  />
-                </div>
+          <div className="col-span-2 lg:col-span-1">
+            <Link href="/" className="flex items-center gap-2 mb-4 group">
+              <div className="relative w-10 h-10 bg-white rounded-lg transition-transform duration-300 group-hover:scale-110">
+                <Image src="/images/logobg.png" alt="Laina Bags" fill className="object-contain" />
               </div>
-              <div>
-                <h3 className="text-xl font-black text-white">Laina Bags</h3>
-                <span className="text-[10px] font-bold text-sky-400 uppercase tracking-wider">Premium</span>
-              </div>
+              <span className="text-lg font-black transition-colors duration-300 group-hover:text-blue-200">Laina Bags</span>
             </Link>
-            <p className="text-slate-400 text-sm leading-relaxed mb-6">
-              Crafting elegance in every stitch. Premium bags designed for the modern lifestyle.
+            <p className="text-blue-200 text-sm mb-4 leading-relaxed">
+              Premium fashion bags since 2010
             </p>
+
+            {/* Social Links */}
             <div className="flex gap-3">
-              <a href="https://www.facebook.com/share/1HKbExT6wQ/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-white/10 hover:bg-sky-500/20 border border-white/10 hover:border-sky-400/30 flex items-center justify-center transition-all duration-200">
-                <Facebook size={18} />
+              <a href="#" className="w-9 h-9 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white/20 hover:scale-110 transition-all">
+                <Facebook className="w-4 h-4" />
               </a>
-              <a href="https://www.instagram.com/searchbag.in?igsh=MWdwdjZudzRuODY0OQ==" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-white/10 hover:bg-sky-500/20 border border-white/10 hover:border-sky-400/30 flex items-center justify-center transition-all duration-200">
-                <Instagram size={18} />
+              <a href="#" className="w-9 h-9 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white/20 hover:scale-110 transition-all">
+                <Instagram className="w-4 h-4" />
               </a>
-              <a href="https://www.linkedin.com/company/search-bag/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-white/10 hover:bg-sky-500/20 border border-white/10 hover:border-sky-400/30 flex items-center justify-center transition-all duration-200">
-                <Linkedin size={18} />
+              <a href="#" className="w-9 h-9 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white/20 hover:scale-110 transition-all">
+                <Twitter className="w-4 h-4" />
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h4 className="text-lg font-bold mb-6 text-white">Quick Links</h4>
-            <ul className="space-y-3">
-              {[
-                { label: "About Us", path: "/about" },
-                { label: "All Products", path: "/all-products" },
-                { label: "Contact", path: "/contact" },
-              ].map((link) => (
-                <li key={link.path}>
-                  <Link href={link.path} className="text-slate-400 hover:text-sky-400 transition-colors duration-200 text-sm font-medium">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="col-span-1">
+            <h4 className="text-sm font-bold mb-3 text-white">Quick Links</h4>
+            <div className="space-y-2 text-sm">
+              <Link href="/" className="block text-blue-200 hover:text-white hover:translate-x-1 transition-all">Home</Link>
+              <Link href="/all-products" className="block text-blue-200 hover:text-white hover:translate-x-1 transition-all">Products</Link>
+              <Link href="/about" className="block text-blue-200 hover:text-white hover:translate-x-1 transition-all">About</Link>
+              <Link href="/contact" className="block text-blue-200 hover:text-white hover:translate-x-1 transition-all">Contact</Link>
+            </div>
           </div>
 
           {/* Categories */}
-          <div>
-            <h4 className="text-lg font-bold mb-6 text-white">Categories</h4>
-            <ul className="space-y-3">
-              {["Backpack", "Laptop Bag", "Sling Bag", "Duffel Bag", "Gym Bag"].map((category) => (
-                <li key={category}>
-                  <Link href={`/all-products?category=${category.toLowerCase()}`} className="text-slate-400 hover:text-sky-400 transition-colors duration-200 text-sm font-medium">
-                    {category}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="col-span-1">
+            <h4 className="text-sm font-bold mb-3 text-white">Categories</h4>
+            <div className="space-y-2 text-sm">
+              <Link href="/all-products?category=backpack" className="block text-blue-200 hover:text-white hover:translate-x-1 transition-all">Backpacks</Link>
+              <Link href="/all-products?category=laptop bag" className="block text-blue-200 hover:text-white hover:translate-x-1 transition-all">Laptop Bags</Link>
+              <Link href="/all-products?category=hiking bag" className="block text-blue-200 hover:text-white hover:translate-x-1 transition-all">Hiking Bags</Link>
+              <Link href="/all-products?category=duffel bag" className="block text-blue-200 hover:text-white hover:translate-x-1 transition-all">Duffel Bags</Link>
+            </div>
           </div>
 
           {/* Contact */}
-          <div>
-            <h4 className="text-lg font-bold mb-6 text-white">Contact Us</h4>
-            <div className="space-y-3">
-              <a href="https://maps.app.goo.gl/TkMbQxgaCfq13wn58" target="_blank" rel="noopener noreferrer" className="flex items-start gap-3 text-slate-400 hover:text-sky-400 transition-colors text-sm">
+          <div className="col-span-2 lg:col-span-1">
+            <h4 className="text-sm font-bold mb-3 text-white">Contact</h4>
+            <div className="space-y-2.5 text-sm">
+              <a href="https://maps.app.goo.gl/bW6dYV15hzHGom939" target="_blank" rel="noopener noreferrer" className="flex items-start gap-2 text-blue-200 hover:text-white transition-colors">
                 <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                <span>Shop No. 28, Lohe Ki Chawl, Mumbai Bag Market, Maulana Azad Road, Madanpura, Mumbai - 400 008</span>
+                <span className="text-xs font-medium">Room No. 1, Chawl 12, Byculla Station Rd, Near Star of India Hotel, Byculla (W), Mumbai - 400 011</span>
               </a>
-              <a href="tel:+919326123535" className="flex items-center gap-3 text-slate-400 hover:text-sky-400 transition-colors text-sm">
+              <a href="tel:917045010589" className="flex items-center gap-2 text-blue-200 hover:text-white transition-colors">
                 <Phone className="w-4 h-4 flex-shrink-0" />
-                <span>+91 93261 23535</span>
+                <span className="text-xs font-medium">+91 70450 10589</span>
               </a>
-              <a href="tel:+918828081163" className="flex items-center gap-3 text-slate-400 hover:text-sky-400 transition-colors text-sm">
-                <Phone className="w-4 h-4 flex-shrink-0" />
-                <span>+91 88280 81163</span>
-              </a>
-              <a href="mailto:support@lainabags.com" className="flex items-center gap-3 text-slate-400 hover:text-sky-400 transition-colors text-sm">
+              <a href="mailto:info@lainabags.com" className="flex items-center gap-2 text-blue-200 hover:text-white transition-colors">
                 <Mail className="w-4 h-4 flex-shrink-0" />
-                <span>support@lainabags.com</span>
+                <span className="text-xs font-medium">info@lainabags.com</span>
               </a>
-              <div className="flex items-center gap-3 text-slate-400 text-sm">
-                <Clock className="w-4 h-4 flex-shrink-0" />
-                <span>Mon-Sat: 10:00 AM - 7:00 PM</span>
-              </div>
             </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="mt-8 pt-6 border-t border-white/10">
+          <div className="text-center text-sm text-blue-200">
+            <p>&copy; {new Date().getFullYear()} Laina Bags. All rights reserved.</p>
           </div>
         </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="relative border-t border-white/10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-slate-400">
-              © {new Date().getFullYear()} <span className="font-bold text-white">Laina Bags</span>. All rights reserved.
-            </p>
-            <div className="flex gap-6 text-sm text-slate-400">
-              <Link href="/about" className="hover:text-sky-400 transition-colors">Privacy</Link>
-              <Link href="/contact" className="hover:text-sky-400 transition-colors">Terms</Link>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* WhatsApp Float Button */}
+      {/* WhatsApp Floating Button */}
       <a
-        href="https://wa.me/919326123535"
+        href="https://wa.me/917045010589"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed right-6 bottom-6 z-40 w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-2xl flex items-center justify-center hover:from-green-600 hover:to-green-700 transition-all duration-200 hover:scale-110 group"
-        aria-label="Order on WhatsApp"
+        className="fixed right-6 bottom-6 z-40 group/whatsapp"
       >
-        <MessageCircle className="w-7 h-7 text-white" />
-        <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></span>
+        <div className="relative">
+          <div className="absolute inset-0 bg-green-500 rounded-full blur-lg opacity-50 group-hover/whatsapp:opacity-75 transition-opacity"></div>
+          <div className="relative w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-xl hover:bg-green-600 transition-all hover:scale-110">
+            <MessageCircle className="w-7 h-7 text-white" />
+          </div>
+        </div>
       </a>
     </footer>
   );
