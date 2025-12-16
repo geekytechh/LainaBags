@@ -51,7 +51,7 @@ const AddProduct = () => {
         setCategory(product.category || "Backpack");
         setPrice(product.price || "");
         setOfferPrice(product.offerPrice || "");
-        setWhatsappNumber(product.whatsappNumber || "+919326123535");
+        setWhatsappNumber(product.whatsappNumber || "+917045010589");
         setColors(product.colors || []);
         setPreviewImages(product.image || []);
       } else {
@@ -136,12 +136,49 @@ const AddProduct = () => {
     setColorInput("");
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const newFiles = Array.from(e.target.files);
-    const newPreviews = newFiles.map((file) => URL.createObjectURL(file));
 
-    setFiles((prev) => [...prev, ...newFiles]);
-    setPreviewImages((prev) => [...prev, ...newPreviews]);
+    try {
+      // Dynamically import the compression library
+      const imageCompression = (await import('browser-image-compression')).default;
+
+      // Compression options
+      const options = {
+        maxSizeMB: 0.8, // Max size per image (800KB)
+        maxWidthOrHeight: 1920, // Max dimension
+        useWebWorker: true,
+        fileType: 'image/jpeg', // Convert to JPEG for better compression
+      };
+
+      // Show loading toast
+      const loadingToast = toast.loading('Compressing images...');
+
+      // Compress all images
+      const compressedFiles = await Promise.all(
+        newFiles.map(async (file) => {
+          try {
+            const compressedFile = await imageCompression(file, options);
+            return compressedFile;
+          } catch (error) {
+            console.error('Error compressing image:', error);
+            return file; // Use original if compression fails
+          }
+        })
+      );
+
+      toast.dismiss(loadingToast);
+      toast.success(`${compressedFiles.length} image(s) compressed successfully!`);
+
+      // Create previews
+      const newPreviews = compressedFiles.map((file) => URL.createObjectURL(file));
+
+      setFiles((prev) => [...prev, ...compressedFiles]);
+      setPreviewImages((prev) => [...prev, ...newPreviews]);
+    } catch (error) {
+      console.error('Error in handleFileChange:', error);
+      toast.error('Error processing images');
+    }
   };
 
   const removeImage = (index) => {
