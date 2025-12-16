@@ -85,7 +85,7 @@ const AboutPage = () => {
               <div className="order-2 lg:order-1">
                 <div className="relative h-96 md:h-[480px] bg-gradient-to-br from-blue-50 to-slate-50 rounded-2xl border border-slate-200 overflow-hidden shadow-xl">
                   <Image
-                    src="/aboutt.png"
+                    src="/about.png"
                     alt="About Laina Bags"
                     fill
                     className="object-contain p-8"
