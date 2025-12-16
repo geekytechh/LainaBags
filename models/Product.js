@@ -10,7 +10,7 @@ const productSchema = new mongoose.Schema({
   category: { type: String, required: true },
   colors: { type: Array, default: [] },
   whatsappNumber: { type: String, required: true },
-  date: { type: Number, required: true },
+  date: { type: Date, required: true },
 });
 
 const Product =

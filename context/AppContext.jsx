@@ -34,13 +34,13 @@ const AppContextProvider = ({ children }) => {
         const cacheBuster = new Date().getTime();
         const response = await fetch(`${apiUrl}?_=${cacheBuster}`, { cache: 'no-store' });
         const data = await response.json();
-        
+
         console.log("API Response:", data); // Add logging to see API response
-        
+
         if (data.success) {
           let filteredProducts = data.products;
           console.log("All products:", filteredProducts.length); // Log total products count
-          
+
           // Log all products and their categories for debugging
           console.log("All products with categories:", data.products.map(p => ({
             name: p.name,
@@ -52,19 +52,19 @@ const AppContextProvider = ({ children }) => {
           if (category) {
             console.log("Filtering by category:", category);
             console.log("Product categories:", data.products.map(p => p.category.toLowerCase()));
-            
+
             filteredProducts = data.products.filter(
               (product) => {
                 // Normalize category names for comparison
                 const productCategory = product.category.toLowerCase().trim();
                 const searchCategory = category.toLowerCase().trim();
-                
+
                 // Check for partial matches or specific mappings
-                const match = 
+                const match =
                   productCategory === searchCategory ||
                   productCategory.includes(searchCategory) ||
                   searchCategory.includes(productCategory);
-                  
+
                 console.log(`Product ${product.name} category: ${productCategory}, match with ${searchCategory}: ${match}`);
                 return match;
               }
