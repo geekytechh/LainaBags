@@ -1,4 +1,3 @@
-// HomeProducts.jsx
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -6,6 +5,7 @@ import ProductCard from "./ProductCard";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { ArrowRight } from "lucide-react";
 
 const HomeProducts = () => {
   const router = useRouter();
@@ -16,7 +16,6 @@ const HomeProducts = () => {
     const fetchProducts = async () => {
       try {
         setIsLoading(true);
-        // Use environment variable for API base URL if available, otherwise use window.location.origin
         const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || window.location.origin;
         const apiUrl = `${baseUrl}/api/product/list`;
         const { data } = await axios.get(apiUrl);
@@ -42,19 +41,21 @@ const HomeProducts = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center px-4 pt-16 pb-12 sm:pt-20 sm:pb-16 sm:px-6">
+    <div className="relative flex flex-col items-center px-4 pt-16 pb-12 sm:pt-20 sm:pb-16 sm:px-6 bg-white">
       <div className="flex flex-col items-center w-full max-w-7xl">
         <div className="relative px-2 mb-12 text-center sm:mb-16 sm:px-0">
-          <div className="absolute -top-16 -left-16 w-32 h-32 rounded-full blur-xl bg-blue-300/20"></div>
-          <div className="absolute -top-8 right-1/4 w-24 h-24 rounded-full blur-lg bg-blue-400/10"></div>
-          <div className="absolute -bottom-12 left-1/2 w-40 h-40 rounded-full blur-xl bg-blue-500/10"></div>
-          <div className="absolute -bottom-10 right-1/4 w-28 h-28 rounded-full blur-lg bg-blue-200/20"></div>
           <div className="relative z-10">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight text-blue-800 sm:text-4xl md:text-5xl sm:mb-6 font-heading">
-              DISCOVER OUR COLLECTION
+            <div className="inline-block mb-4">
+              <span className="px-4 py-1.5 bg-sky-100 border border-sky-200 rounded-full text-xs font-bold tracking-wider text-sky-700 uppercase">
+                Premium Selection
+              </span>
+            </div>
+            <h2 className="mb-4 text-3xl font-black tracking-tight sm:text-4xl md:text-5xl sm:mb-6">
+              <span className="text-slate-900">Discover Our</span>{" "}
+              <span className="text-sky-600">Collection</span>
             </h2>
-            <div className="w-24 sm:w-32 h-1.5 bg-gradient-to-r from-blue-500 to-blue-600 mx-auto rounded-full"></div>
-            <p className="px-1 mx-auto mt-6 max-w-md text-base leading-relaxed text-blue-700 sm:mt-8 sm:max-w-2xl sm:text-lg font-body sm:px-0">
+            <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full mb-6"></div>
+            <p className="px-1 mx-auto mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:mt-6 sm:text-lg sm:px-0">
               Handcrafted bags designed for every occasion, combining premium
               materials with timeless elegance
             </p>
@@ -66,13 +67,13 @@ const HomeProducts = () => {
             {[...Array(8)].map((_, i) => (
               <div
                 key={i}
-                className="bg-white rounded-2xl overflow-hidden aspect-[3/4] animate-pulse border border-blue-100 shadow-soft"
+                className="bg-white rounded-xl overflow-hidden aspect-[3/4] animate-pulse border border-slate-200"
               >
-                <div className="w-full h-3/4 bg-blue-100"></div>
-                <div className="p-5 space-y-3">
-                  <div className="w-3/4 h-4 bg-blue-100 rounded"></div>
-                  <div className="w-1/2 h-4 bg-blue-100 rounded"></div>
-                  <div className="w-1/3 h-5 bg-blue-100 rounded"></div>
+                <div className="w-full h-3/4 bg-slate-100"></div>
+                <div className="p-4 space-y-3">
+                  <div className="w-3/4 h-4 bg-slate-100 rounded"></div>
+                  <div className="w-1/2 h-4 bg-slate-100 rounded"></div>
+                  <div className="w-1/3 h-5 bg-slate-100 rounded"></div>
                 </div>
               </div>
             ))}
@@ -86,18 +87,19 @@ const HomeProducts = () => {
             </div>
             <button
               onClick={() => router.push("/all-products")}
-              className="mt-12 sm:mt-16 px-6 sm:px-10 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full hover:from-blue-500 hover:to-blue-600 transition-all duration-300 font-medium uppercase tracking-wide text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 focus:outline-none"
+              className="group mt-12 sm:mt-16 px-8 py-3.5 bg-sky-600 text-white rounded-xl font-bold text-sm uppercase tracking-wide shadow-lg hover:bg-sky-700 transition-all duration-300 hover:scale-105 flex items-center gap-2 mx-auto"
             >
-              Explore All Collections
+              <span>Explore All Collections</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         ) : (
           <div className="py-16 text-center">
-            <div className="p-6 mx-auto max-w-md bg-gradient-to-br from-white to-blue-50 rounded-2xl border border-blue-100 sm:p-10 shadow-soft">
-              <div className="flex justify-center items-center p-5 mx-auto mb-6 w-24 h-24 rounded-full bg-blue-100/30 sm:w-32 sm:h-32">
+            <div className="p-8 mx-auto max-w-md bg-white rounded-2xl border border-slate-200 sm:p-12 shadow-lg">
+              <div className="flex justify-center items-center p-6 mx-auto mb-8 w-24 h-24 rounded-full bg-sky-100">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="mx-auto w-16 h-16 text-blue-600 sm:h-20 sm:w-20"
+                  className="mx-auto w-16 h-16 text-sky-600"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -110,16 +112,15 @@ const HomeProducts = () => {
                   />
                 </svg>
               </div>
-              <h3 className="mt-4 mb-3 text-xl font-bold text-blue-800 sm:text-2xl font-heading">
+              <h3 className="mt-4 mb-4 text-2xl font-black text-slate-900">
                 New Collections Coming Soon
               </h3>
-              <p className="mb-6 text-sm leading-relaxed text-blue-700 font-body sm:text-base">
-                We're preparing our latest designs. Sign up to be the first to
-                know when we launch.
+              <p className="mb-8 text-sm leading-relaxed text-slate-600">
+                We're preparing our latest premium designs.
               </p>
               <button
                 onClick={() => router.push("/")}
-                className="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-full text-sm sm:text-base font-medium hover:from-blue-500 hover:to-blue-600 transition-all duration-300 shadow-soft hover:shadow-md"
+                className="px-8 py-3 bg-sky-600 text-white rounded-xl text-sm font-bold hover:bg-sky-700 transition-all duration-300"
               >
                 Return Home
               </button>

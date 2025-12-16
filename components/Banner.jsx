@@ -1,118 +1,151 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { Award, Users, Package, TrendingUp, ArrowRight, CheckCircle2, MessageCircle } from "lucide-react";
 
 const Banner = () => {
   const router = useRouter();
 
+  const stats = [
+    { icon: Users, value: "50K+", label: "Happy Customers" },
+    { icon: Package, value: "15+", label: "Years Experience" },
+    { icon: TrendingUp, value: "100+", label: "Premium Products" },
+  ];
+
+  const features = [
+    "Premium Quality Materials",
+    "Expert Craftsmanship",
+    "Free Shipping Above ₹2000",
+    "24/7 Customer Support",
+  ];
+
   return (
-    <section className="overflow-hidden relative px-4 py-24 bg-gradient-to-r from-blue-800 via-blue-700 to-blue-600 rounded-2xl border border-blue-500 shadow-xl sm:px-6 lg:px-8">
-      {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b to-transparent from-blue-500/30"></div>
-      <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-3xl bg-blue-400/30"></div>
-      <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full blur-3xl bg-blue-300/30"></div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[url('/noise.svg')] opacity-30"></div>
-      
-      <div className="relative z-10 mx-auto max-w-7xl">
-        <div className="flex flex-col gap-10 justify-between items-center md:flex-row md:gap-16">
-          {/* Left Content - Brand Info */}
-          <div className="space-y-6 text-center sm:space-y-8 md:text-left">
-            <div className="flex flex-col items-center md:items-start">
-              <div className="flex gap-3 items-center sm:gap-4">
-                <div className="flex overflow-hidden justify-center items-center w-14 h-14 rounded-full shadow-lg transition-transform duration-300 transform sm:h-16 sm:w-16 hover:rotate-12">
-                  <Image
-                    src="/images/search.png"
-                    alt="SearchBag Logo"
-                    width={40}
-                    height={40}
-                    className="object-cover rounded-full"
-                    style={{ background: 'transparent' }}
-                  />
+    <section className="relative py-16 md:py-20 bg-white overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left Content */}
+          <div className="space-y-6">
+            <div className="inline-block">
+              <span className="px-4 py-1.5 bg-sky-100 border border-sky-200 rounded-full text-xs font-bold tracking-wider text-sky-700 uppercase">
+                Since 2007
+              </span>
+            </div>
+
+            <div>
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 leading-tight">
+                <span className="text-slate-900">Premium Bags</span>
+                <br />
+                <span className="text-sky-600">Crafted with Excellence</span>
+              </h1>
+              <p className="text-lg text-slate-600 leading-relaxed max-w-lg">
+                Manufacturer & Wholesaler specializing in premium soft luggage. 
+                Your trusted partner for quality bags since 2007.
+              </p>
+            </div>
+
+            {/* Features */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {features.map((feature, index) => (
+                <div key={index} className="flex items-center gap-2.5">
+                  <div className="w-5 h-5 rounded-full bg-sky-600 flex items-center justify-center flex-shrink-0">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-white" />
+                  </div>
+                  <span className="text-slate-700 font-medium text-sm">{feature}</span>
                 </div>
-                <h1 className="text-3xl font-bold tracking-tight text-white drop-shadow-md sm:text-4xl md:text-5xl">
-                  SEARCH BAG
-                </h1>
-              </div>
-              <p className="px-4 py-1 mt-2 text-sm italic text-blue-100 rounded-full border shadow-md sm:text-base font-body bg-blue-900/30 border-blue-400/30">Since 2007</p>
+              ))}
             </div>
 
-            <div className="p-4 space-y-2 rounded-xl border shadow-md backdrop-blur-sm sm:space-y-3 bg-blue-900/30 border-blue-400/30">
-              <p className="text-base font-medium text-blue-100 sm:text-lg font-body">
-                Manufacturer & Wholesaler
-              </p>
-              <p className="text-lg font-semibold text-white drop-shadow-sm sm:text-xl font-heading">
-                Soft Luggage Experts
-              </p>
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-6 pt-6 border-t border-slate-200">
+              {stats.map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className="w-10 h-10 mx-auto mb-2 rounded-lg bg-sky-100 flex items-center justify-center">
+                    <stat.icon className="w-5 h-5 text-sky-600" />
+                  </div>
+                  <div className="text-xl font-black text-slate-900 mb-1">{stat.value}</div>
+                  <div className="text-xs font-medium text-slate-600 uppercase tracking-wider">{stat.label}</div>
+                </div>
+              ))}
             </div>
 
-            <div className="flex flex-wrap gap-2 justify-center text-xs text-blue-100 md:justify-start sm:text-sm font-body">
-              {
-                ["Laptop Bags", "College Bags", "School Bags", "Luggage", "Traveling Bags",].map((item, index) => (
-                  <span
-                    key={index}
-                    className="bg-blue-900/40 border border-blue-400/30 px-3 sm:px-4 py-1.5 rounded-full shadow-md hover:bg-blue-800/60 hover:border-blue-300/50 hover:text-white transition-all duration-300 transform hover:-translate-y-1"
-                  >
-                    {item}
-                  </span>
-                ))
-              }
+            {/* CTA */}
+            <div className="flex flex-col sm:flex-row gap-3 pt-4">
+              <button
+                onClick={() => router.push("/all-products")}
+                className="group flex items-center justify-center gap-2 px-6 py-3 bg-sky-600 text-white rounded-xl font-bold text-sm shadow-lg hover:bg-sky-700 transition-all duration-300 hover:scale-105"
+              >
+                <span>Explore Products</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </button>
+              <a
+                href="https://wa.me/919326123535"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-green-500 text-white rounded-xl font-bold text-sm shadow-lg hover:bg-green-600 transition-all duration-300 hover:scale-105"
+              >
+                <MessageCircle className="w-5 h-5" />
+                <span>Order on WhatsApp</span>
+              </a>
             </div>
           </div>
 
-          {/* Right Content - Features */}
-          <div className="p-4 mt-6 space-y-4 text-center rounded-2xl border shadow-lg backdrop-blur-sm sm:space-y-6 md:text-right md:mt-0 bg-blue-900/30 sm:p-5 border-blue-400/30">
-            <div className="space-y-2 sm:space-y-3">
-              <div className="flex flex-col md:items-end">
-                <div className="inline-flex items-center gap-2 bg-blue-200/30 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full shadow-md border border-blue-300/30">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 text-blue-200 animate-pulse sm:h-5 sm:w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <p className="text-base font-medium text-blue-100 sm:text-lg font-body">
-                    Bulk Deals · Huge Variety · Best Industry Prices
-                  </p>
-                </div>
+          {/* Right Image */}
+          <div className="relative">
+            <div className="relative rounded-2xl overflow-hidden shadow-xl border border-slate-200">
+              <div className="absolute inset-0 bg-gradient-to-br from-sky-50 to-slate-50"></div>
+              <div className="relative aspect-square bg-white p-12">
+                <Image
+                  src="/images/search.png"
+                  alt="Laina Bags"
+                  width={400}
+                  height={400}
+                  className="object-contain w-full h-full"
+                />
               </div>
-              <p className="text-lg font-semibold text-white drop-shadow-sm sm:text-xl font-heading">
-                Specialist in Complementary Items
-              </p>
             </div>
 
-            <div className="flex flex-col items-center space-y-3 md:items-end sm:space-y-4">
-              <button
-                onClick={() => router.push("/all-products")}
-                className="relative px-6 py-2 text-base font-medium text-blue-800 bg-gradient-to-r from-blue-300 to-blue-100 rounded-full shadow-xl transition-all duration-300 transform hover:from-blue-200 hover:to-white sm:px-8 sm:py-3 sm:text-lg hover:shadow-2xl group font-body hover:-translate-y-1"
-              >
-                <span className="relative z-10 mr-2">Explore Products</span>
-              </button>
-              <div className="flex gap-2 items-center mt-2 sm:gap-3">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 text-blue-200 sm:h-5 sm:w-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"
-                  />
-                </svg>
-                <p className="text-sm font-medium text-blue-100 transition-colors sm:text-base hover:text-white font-body">
-                  www.searchbag.in
-                </p>
+            {/* Floating Cards */}
+            <div className="absolute -top-4 -right-4 bg-white rounded-xl shadow-xl border border-slate-200 p-3 transform rotate-3 hover:rotate-0 transition-transform">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center">
+                  <Package className="w-5 h-5 text-amber-600" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-400 uppercase">Bulk Orders</div>
+                  <div className="text-sm font-black text-slate-900">Best Prices</div>
+                </div>
               </div>
             </div>
+
+            <div className="absolute -bottom-4 -left-4 bg-white rounded-xl shadow-xl border border-slate-200 p-3 transform -rotate-3 hover:rotate-0 transition-transform">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5 text-sky-600" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-slate-400 uppercase">Quality</div>
+                  <div className="text-sm font-black text-slate-900">Guaranteed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Categories */}
+        <div className="mt-16 pt-12 border-t border-slate-200">
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-black text-slate-900 mb-2">Our Specializations</h3>
+            <p className="text-slate-600">Premium bags for every need</p>
+          </div>
+          <div className="flex flex-wrap justify-center gap-3">
+            {["Laptop Bags", "College Bags", "School Bags", "Luggage", "Traveling Bags", "Accessories"].map((item, index) => (
+              <div
+                key={index}
+                className="px-5 py-2.5 bg-white border border-slate-200 rounded-xl font-bold text-sm text-slate-700 hover:border-sky-300 hover:text-sky-700 hover:bg-sky-50 transition-all duration-300 cursor-pointer"
+              >
+                {item}
+              </div>
+            ))}
           </div>
         </div>
       </div>

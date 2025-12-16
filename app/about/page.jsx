@@ -2,215 +2,184 @@
 
 import Image from "next/image";
 import React from "react";
+import { Award, Users, Package, Clock, CheckCircle2, Sparkles } from "lucide-react";
+
 const AboutPage = () => {
   const coreValues = [
     {
-      title: "PREMIUM QUALITY",
-      description:
-        "We source the finest materials and partner with skilled artisans to create exceptional products.",
-      icon: (
-        <svg
-          className="w-6 h-6 text-blue-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
+      title: "Premium Quality",
+      description: "We source the finest materials and partner with skilled artisans to create exceptional products.",
+      icon: Award,
     },
     {
-      title: "CUSTOMER SATISFACTION",
-      description:
-        "Your happiness is our priority. We strive to exceed expectations in every interaction.",
-      icon: (
-        <svg
-          className="w-6 h-6 text-blue-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
+      title: "Customer Satisfaction",
+      description: "Your happiness is our priority. We strive to exceed expectations in every interaction.",
+      icon: Users,
     },
     {
-      title: "AFFORDABLE PRICING",
-      description:
-        "We offer high-quality products at reasonable prices so everyone can enjoy stylish bags.",
-      icon: (
-        <svg
-          className="w-6 h-6 text-blue-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
+      title: "Affordable Pricing",
+      description: "We offer high-quality products at reasonable prices so everyone can enjoy stylish bags.",
+      icon: Package,
     },
     {
-      title: "TIMELY DELIVERY",
+      title: "Timely Delivery",
       description: "We ensure our products reach you on time, every time.",
-      icon: (
-        <svg
-          className="w-6 h-6 text-blue-600"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-      ),
+      icon: Clock,
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <div className="overflow-hidden relative py-16 bg-gradient-to-r from-blue-900 to-blue-700 sm:py-20 md:py-28">
-        <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-10"></div>
-        <div className="absolute -top-24 -right-24 w-64 h-64 rounded-full blur-3xl bg-blue-500/20"></div>
-        <div className="absolute -bottom-32 -left-32 w-96 h-96 rounded-full blur-3xl bg-blue-300/30"></div>
-        <div className="container relative px-4 mx-auto sm:px-6">
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mb-4 text-3xl font-bold text-white drop-shadow-md sm:text-4xl md:text-5xl font-heading sm:mb-6">
-              ABOUT SEARCH BAG
+      <div className="relative overflow-hidden bg-gradient-to-br from-sky-600 via-sky-500 to-sky-700 text-white">
+        <div 
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V4h4V2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V4h4V2H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+          }}
+        ></div>
+        <div className="relative container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 mb-6">
+              <Sparkles className="w-5 h-5 text-amber-400" />
+              <span className="px-4 py-1.5 bg-white/20 backdrop-blur-sm border border-white/30 rounded-full text-xs font-bold tracking-wider uppercase">
+                Since 2007
+              </span>
+              <Sparkles className="w-5 h-5 text-amber-400" />
+            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 leading-tight">
+              About Laina Bags
             </h1>
-            <p className="px-2 py-3 mx-auto max-w-2xl text-base leading-relaxed text-blue-100 rounded-lg border shadow-lg backdrop-blur-sm sm:text-lg font-body bg-blue-900/10 border-blue-200/20">
+            <div className="w-24 h-1.5 bg-white/30 mx-auto rounded-full mb-6"></div>
+            <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl mx-auto">
               Established in 2007 in Mumbai, we are a premier manufacturer and
-              wholesaler of high-quality bags.
+              wholesaler of high-quality bags, crafting elegance in every stitch.
             </p>
           </div>
         </div>
       </div>
 
       {/* Mission Section */}
-      <div className="py-12 sm:py-16 md:py-20">
-        <div className="container px-4 mx-auto sm:px-6">
-          <div className="flex flex-col gap-8 items-center lg:flex-row sm:gap-12">
-            <div className="order-2 mb-8 w-full lg:w-1/2 lg:mb-0 lg:order-1">
-              <div className="overflow-hidden relative h-96 bg-blue-100 rounded-2xl shadow-xl sm:h-[400px] lg:h-[500px]">
-                <Image
-                  src="/aboutt.png"
-                  alt="About Search Bag"
-                  fill
-                  className="object-contain rounded-2xl"
-                  priority
-                />
-        
+      <div className="py-16 md:py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div className="order-2 lg:order-1">
+                <div className="relative h-96 md:h-[500px] bg-gradient-to-br from-sky-50 to-slate-50 rounded-3xl border border-slate-200 overflow-hidden shadow-xl">
+                  <Image
+                    src="/aboutt.png"
+                    alt="About Laina Bags"
+                    fill
+                    className="object-contain p-8"
+                    priority
+                  />
+                </div>
               </div>
-            </div>
-            <div className="order-1 p-8 w-full bg-white rounded-2xl border border-blue-100 shadow-lg lg:w-1/2 lg:order-2">
-              <h2 className="mb-4 text-2xl font-bold text-blue-900 sm:text-3xl font-heading sm:mb-6">
-                OUR MISSION
-              </h2>
-              <div className="mb-6 w-16 h-1 bg-blue-600 sm:w-20 sm:mb-8"></div>
-              <p className="mb-4 text-sm leading-relaxed text-gray-700 sm:text-base font-body sm:mb-6">
-                At Search Bag, our mission is to offer high-quality, stylish,
-                and durable bags that meet the diverse needs of our customers.
-                We are committed to delivering innovative products at affordable
-                prices, ensuring that everyone can enjoy premium value.
-              </p>
-              <p className="text-sm leading-relaxed text-gray-700 sm:text-base font-body">
-                With a strong focus on customer satisfaction and timely service,
-                we aim to build lasting relationships and become a trusted brand
-                in every customer's journey.
-              </p>
+              <div className="order-1 lg:order-2">
+                <div className="inline-block mb-4">
+                  <span className="px-4 py-1.5 bg-sky-100 border border-sky-200 rounded-full text-xs font-bold tracking-wider text-sky-700 uppercase">
+                Our Mission
+              </span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-6">
+                  Crafting Excellence
+                </h2>
+                <div className="w-16 h-1 bg-sky-600 rounded-full mb-6"></div>
+                <div className="space-y-4 text-slate-700 leading-relaxed">
+                  <p>
+                    At Laina Bags, our mission is to offer high-quality, stylish,
+                    and durable bags that meet the diverse needs of our customers.
+                    We are committed to delivering innovative products at affordable
+                    prices, ensuring that everyone can enjoy premium value.
+                  </p>
+                  <p>
+                    With a strong focus on customer satisfaction and timely service,
+                    we aim to build lasting relationships and become a trusted brand
+                    in every customer's journey.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Core Values */}
-      <div className="py-12 bg-gradient-to-b from-white to-blue-50 sm:py-16 md:py-20">
-        <div className="container px-4 mx-auto sm:px-6">
-          <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-16">
-            <h2 className="mb-4 text-2xl font-bold text-blue-900 sm:text-3xl font-heading">
-              WHY CHOOSE US
-            </h2>
-            <div className="mx-auto mb-6 w-20 h-1 bg-blue-600 sm:mb-8"></div>
-            <p className="inline-block px-6 py-2 text-sm text-blue-800 rounded-full border border-blue-200 shadow-sm font-body sm:text-base bg-blue-100/50">
-              What makes Search Bag stand out from the competition
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 sm:gap-6">
-            {coreValues.map((value, index) => (
-              <div
-                key={index}
-                className="p-6 bg-white rounded-xl border border-blue-100 shadow-lg transition-all duration-300 transform sm:p-8 hover:shadow-xl hover:-translate-y-1 hover:border-blue-300"
-              >
-                <div className="flex justify-center items-center mb-4 w-12 h-12 bg-blue-100 rounded-full shadow-md sm:w-14 sm:h-14 sm:mb-6">
-                  <div className="text-blue-600">
-                    {React.cloneElement(value.icon, { className: 'w-6 h-6 sm:w-7 sm:h-7 text-blue-600' })}
-                  </div>
-                </div>
-                <h3 className="mb-2 text-base font-semibold text-blue-900 sm:text-lg font-heading sm:mb-3">
-                  {value.title}
-                </h3>
-                <p className="text-xs text-gray-600 font-body sm:text-sm">
-                  {value.description}
-                </p>
+      <div className="py-16 md:py-24 bg-gradient-to-b from-white to-sky-50/30">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12 md:mb-16">
+              <div className="inline-block mb-4">
+                <span className="px-4 py-1.5 bg-sky-100 border border-sky-200 rounded-full text-xs font-bold tracking-wider text-sky-700 uppercase">
+                  Why Choose Us
+                </span>
               </div>
-            ))}
+              <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">
+                What Makes Us Different
+              </h2>
+              <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full"></div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {coreValues.map((value, index) => {
+                const Icon = value.icon;
+                return (
+                  <div
+                    key={index}
+                    className="p-6 bg-white rounded-2xl border border-slate-200 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                  >
+                    <div className="w-14 h-14 rounded-xl bg-sky-100 flex items-center justify-center mb-4">
+                      <Icon className="w-7 h-7 text-sky-600" />
+                    </div>
+                    <h3 className="text-xl font-black text-slate-900 mb-2">
+                      {value.title}
+                    </h3>
+                    <p className="text-slate-600 leading-relaxed">
+                      {value.description}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
 
       {/* History Section */}
-      <div className="py-12 sm:py-16 md:py-20">
-        <div className="container px-4 mx-auto sm:px-6">
-          <div className="overflow-hidden mx-auto max-w-4xl bg-white rounded-2xl border border-blue-100 shadow-xl">
-            <div className="px-6 py-8 bg-gradient-to-r from-blue-800 to-blue-600 sm:px-10">
-              <h2 className="mb-4 text-2xl font-bold text-center text-white drop-shadow-md sm:text-3xl font-heading sm:mb-6">
-                OUR STORY
-              </h2>
-              <div className="mx-auto w-16 h-1 bg-blue-200 sm:w-20"></div>
-            </div>
-            
-            <div className="p-6 sm:p-10">
-              <div className="relative z-10">
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-blue-100 rounded-full opacity-70 blur-2xl"></div>
-                <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-blue-50 rounded-full opacity-70 blur-2xl"></div>
-                
-                <div className="relative space-y-4 text-sm text-gray-700 sm:text-base font-body sm:space-y-6">
-                  <p className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500 shadow-md">
-                    Established in the year 2007 at Mumbai, Maharashtra, we "Search
-                    Bag" are a Sole Proprietorship based firm, engaged as the
-                    foremost Manufacturer and Wholesaler of Messenger Bags, Boys
-                    Backpack, and more.
-                  </p>
-                  <p className="p-4 bg-gradient-to-r from-white to-blue-50 rounded-lg border border-blue-100 shadow-md">
-                    Our products are high in demand due to their premium quality and
-                    affordable prices. Furthermore, we ensure to timely deliver
-                    these products to our clients, through this we have gained a
-                    huge clients base in the market.
-                  </p>
-                  <p className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500 shadow-md">
-                    From humble beginnings in Mumbai's bustling bag market, we've
-                    grown to become a trusted name in the industry, known for our
-                    commitment to quality and customer satisfaction.
-                  </p>
+      <div className="py-16 md:py-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+              <div className="bg-gradient-to-r from-sky-600 to-sky-500 px-8 py-10 text-center">
+                <h2 className="text-3xl md:text-4xl font-black text-white mb-3">
+                  Our Story
+                </h2>
+                <div className="w-20 h-1 bg-white/30 mx-auto rounded-full"></div>
+              </div>
+              
+              <div className="p-8 md:p-12">
+                <div className="space-y-6">
+                  <div className="p-6 bg-sky-50 rounded-xl border-l-4 border-sky-600">
+                    <p className="text-slate-700 leading-relaxed">
+                      Established in the year 2007 at Mumbai, Maharashtra, we "Laina Bags" 
+                      are a Sole Proprietorship based firm, engaged as the foremost Manufacturer 
+                      and Wholesaler of Messenger Bags, Boys Backpack, and more.
+                    </p>
+                  </div>
+                  <div className="p-6 bg-white rounded-xl border border-slate-200">
+                    <p className="text-slate-700 leading-relaxed">
+                      Our products are high in demand due to their premium quality and
+                      affordable prices. Furthermore, we ensure to timely deliver
+                      these products to our clients, through this we have gained a
+                      huge clients base in the market.
+                    </p>
+                  </div>
+                  <div className="p-6 bg-sky-50 rounded-xl border-l-4 border-sky-600">
+                    <p className="text-slate-700 leading-relaxed">
+                      From humble beginnings in Mumbai's bustling bag market, we've
+                      grown to become a trusted name in the industry, known for our
+                      commitment to quality and customer satisfaction.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

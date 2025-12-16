@@ -1,23 +1,19 @@
-// Updated `/app/all-products/page.jsx` with SWR
-
 "use client";
 
 import { useState, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
 import { useAppContext } from "@/context/AppContext";
 import { useSearchParams, useRouter } from "next/navigation";
-import Image from "next/image";
-import { assets } from "@/assets/assets";
 import useSWR from "swr";
+import { Filter, X } from "lucide-react";
 
 const fetcher = (url) => fetch(url, { cache: "no-store" }).then((res) => res.json());
 
 const AllProducts = () => {
   const { category, setCategory } = useAppContext();
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [complimentaryItems, setComplimentaryItems] = useState([]);
   const [activeFilter, setActiveFilter] = useState("all");
-  const [showComplimentary, setShowComplimentary] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -55,37 +51,13 @@ const AllProducts = () => {
         });
       }
       setFilteredProducts(filtered);
-
-      const complementaryMap = {
-        backpack: ["accessories", "complementary items"],
-        "laptop bag": ["accessories", "complementary items"],
-        "sling bag": ["accessories", "complementary items"],
-        "duffel bag": ["accessories", "complementary items"],
-        "gym bag": ["accessories", "complementary items"],
-        accessories: ["backpack", "laptop bag", "complementary items"],
-        "complementary items": ["backpack", "laptop bag", "accessories"],
-      };
-
-      const complementaryCategories = complementaryMap[activeFilter] || [];
-      if (complementaryCategories.length > 0) {
-        const complementaryProducts = products
-          .filter((product) => complementaryCategories.includes(product.category.toLowerCase()))
-          .slice(0, 4);
-        setComplimentaryItems(complementaryProducts);
-        setShowComplimentary(complementaryProducts.length > 0);
-      } else {
-        setComplimentaryItems([]);
-        setShowComplimentary(false);
-      }
     } else {
       setFilteredProducts([]);
-      setComplimentaryItems([]);
-      setShowComplimentary(false);
     }
   }, [products, activeFilter]);
 
   const categories = [
-    { id: "all", name: "All Bags" },
+    { id: "all", name: "All Products" },
     { id: "backpack", name: "Backpack" },
     { id: "laptop bag", name: "Laptop Bag" },
     { id: "sling bag", name: "Sling Bag" },
@@ -96,111 +68,158 @@ const AllProducts = () => {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen">
-      <div className="px-4 sm:px-6 lg:px-8 py-10 sm:py-12 max-w-7xl mx-auto">
-        <div className="text-center mb-10 sm:mb-12 px-2 relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-blue-300/20 rounded-full blur-3xl opacity-70 pointer-events-none"></div>
-          <div className="absolute bottom-0 right-10 w-40 h-40 bg-blue-400/20 rounded-full blur-3xl opacity-60 pointer-events-none"></div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-900 font-heading tracking-tight mb-4 relative">
-            Our Collection
-          </h1>
-          <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full mx-auto mb-4 sm:mb-6 shadow-sm"></div>
-          <p className="text-blue-800/80 max-w-md sm:max-w-2xl mx-auto text-base sm:text-lg leading-relaxed font-body relative">
-            Explore our complete collection of premium bags, designed for every
-            lifestyle and occasion.
-          </p>
+    <div className="min-h-screen bg-white">
+      {/* Hero Header */}
+      <div className="bg-gradient-to-br from-sky-50 via-white to-sky-50 border-b border-slate-200">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-block mb-4">
+              <span className="px-4 py-1.5 bg-sky-100 border border-sky-200 rounded-full text-xs font-bold tracking-wider text-sky-700 uppercase">
+                Complete Collection
+              </span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4">
+              <span className="text-slate-900">Our</span>{" "}
+              <span className="text-sky-600">Collection</span>
+            </h1>
+            <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full mb-4"></div>
+            <p className="text-slate-600 text-lg leading-relaxed">
+              Explore our complete collection of premium bags, designed for every lifestyle and occasion
+            </p>
+          </div>
         </div>
+      </div>
 
-        <div className="mb-8 sm:mb-10">
-          <div className="bg-white rounded-xl shadow-md p-4 border border-blue-100 relative overflow-hidden">
-            <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-100/50 rounded-full blur-2xl opacity-60 pointer-events-none"></div>
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0 mb-4 relative z-10">
-              <h2 className="text-base sm:text-lg font-medium text-blue-900 font-heading">
-                Filter by Category
-              </h2>
-              <p className="text-blue-700/70 text-sm font-body bg-blue-50/70 px-3 py-1 rounded-full">
-                {filteredProducts.length} products found
-              </p>
+      {/* Main Content - Centered */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        {/* Filter Section */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="md:hidden flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-xl text-sm font-bold hover:bg-sky-700 transition-all"
+              >
+                <Filter className="w-4 h-4" />
+                <span>Filters</span>
+              </button>
+              <h2 className="text-lg font-bold text-slate-900">Filter by Category</h2>
             </div>
-            <div className="flex flex-wrap gap-2 relative z-10">
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => {
-                    setActiveFilter(cat.id);
-                    if (cat.id === "all") {
-                      router.push("/all-products");
-                    } else {
-                      router.push(`/all-products?category=${cat.id}`);
-                    }
-                  }}
-                  className={`px-4 py-2 text-sm font-medium transition-all duration-200 whitespace-nowrap rounded-lg ${
-                    activeFilter === cat.id
-                      ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-md"
-                      : "bg-white text-blue-800 hover:bg-blue-50 border border-blue-200"
-                  }`}
-                >
-                  {cat.name}
+            <div className="px-4 py-2 bg-sky-50 border border-sky-200 rounded-xl">
+              <span className="text-sm font-bold text-sky-700">
+                {filteredProducts.length} products
+              </span>
+            </div>
+          </div>
+
+          {/* Mobile Filter Dropdown */}
+          {showFilters && (
+            <div className="md:hidden mb-4 p-4 bg-white border border-slate-200 rounded-xl shadow-lg">
+              <div className="flex items-center justify-between mb-3">
+                <span className="font-bold text-slate-900">Categories</span>
+                <button onClick={() => setShowFilters(false)}>
+                  <X className="w-5 h-5 text-slate-600" />
                 </button>
-              ))}
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => {
+                      setActiveFilter(cat.id);
+                      setShowFilters(false);
+                      if (cat.id === "all") {
+                        router.push("/all-products");
+                      } else {
+                        router.push(`/all-products?category=${cat.id}`);
+                      }
+                    }}
+                    className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
+                      activeFilter === cat.id
+                        ? "bg-sky-600 text-white shadow-lg"
+                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                    }`}
+                  >
+                    {cat.name}
+                  </button>
+                ))}
+              </div>
             </div>
+          )}
+
+          {/* Desktop Filters */}
+          <div className="hidden md:flex flex-wrap gap-3">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  setActiveFilter(cat.id);
+                  if (cat.id === "all") {
+                    router.push("/all-products");
+                  } else {
+                    router.push(`/all-products?category=${cat.id}`);
+                  }
+                }}
+                className={`px-5 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 ${
+                  activeFilter === cat.id
+                    ? "bg-sky-600 text-white shadow-lg scale-105"
+                    : "bg-white text-slate-700 hover:bg-sky-50 hover:text-sky-700 border border-slate-200"
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
           </div>
         </div>
 
+        {/* Products Grid - Centered */}
         {isLoading ? (
-          <div className="col-span-full text-center py-16 sm:py-20 px-4">
-            <div className="mx-auto max-w-md relative">
-              <div className="animate-pulse flex flex-col items-center">
-                <div className="h-12 w-12 bg-blue-200 rounded-full mb-4"></div>
-                <div className="h-4 bg-blue-200 rounded w-48 mb-2"></div>
-                <div className="h-3 bg-blue-100 rounded w-32"></div>
-              </div>
+          <div className="text-center py-20">
+            <div className="inline-block">
+              <div className="w-16 h-16 border-4 border-sky-200 rounded-full border-t-sky-600 animate-spin mx-auto mb-4"></div>
+              <p className="text-slate-600 font-medium">Loading products...</p>
             </div>
           </div>
         ) : (
           <>
             {filteredProducts.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
                 {filteredProducts.map((product, index) => (
                   <ProductCard key={index} product={product} />
                 ))}
               </div>
             ) : (
-              <div className="col-span-full text-center py-16 sm:py-20 px-4">
-                <div className="mx-auto max-w-md relative">
-                  <h3 className="mt-4 text-lg sm:text-xl font-medium text-blue-900 font-heading relative z-10">
-                    No products found
-                  </h3>
+              <div className="text-center py-20">
+                <div className="max-w-md mx-auto">
+                  <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-sky-100 flex items-center justify-center">
+                    <svg
+                      className="w-10 h-10 text-sky-600"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                      />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl font-black text-slate-900 mb-2">No products found</h3>
+                  <p className="text-slate-600 mb-6">Try selecting a different category</p>
                   <button
                     onClick={() => {
                       setActiveFilter("all");
                       router.push("/all-products");
                     }}
-                    className="mt-6 px-6 py-2.5 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-lg text-sm font-medium hover:from-blue-700 hover:to-blue-600 transition-all duration-300 shadow-md hover:shadow-lg"
+                    className="px-6 py-3 bg-sky-600 text-white rounded-xl font-bold text-sm hover:bg-sky-700 transition-all duration-300 shadow-lg hover:shadow-xl"
                   >
                     View All Products
                   </button>
                 </div>
               </div>
             )}
-
-            {/* {showComplimentary && complimentaryItems.length > 0 && (
-              <div className="mt-16 pt-8 border-t border-blue-100">
-                <div className="text-center mb-8">
-                  <h2 className="text-2xl sm:text-3xl font-bold text-blue-900 font-heading tracking-tight mb-3 relative">
-                    Complimentary Items
-                  </h2>
-                  <p className="text-blue-800/80 max-w-md sm:max-w-2xl mx-auto text-sm sm:text-base leading-relaxed font-body">
-                    Products that pair perfectly with your {activeFilter}
-                  </p>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
-                  {complimentaryItems.map((product, index) => (
-                    <ProductCard key={`comp-${index}`} product={product} />
-                  ))}
-                </div>
-              </div>
-            )} */}
           </>
         )}
       </div>
