@@ -12,14 +12,9 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
-// Route segment config to handle larger payloads
-export const config = {
-    api: {
-        bodyParser: {
-            sizeLimit: '10mb',
-        },
-    },
-};
+// Route segment config - New Next.js App Router format
+export const maxDuration = 60; // Maximum duration in seconds
+export const dynamic = 'force-dynamic'; // Disable static optimization
 
 export async function POST(request) {
     try {
