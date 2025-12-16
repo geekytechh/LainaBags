@@ -1,0 +1,8 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /seller/
+Disallow: /api/
+
+# Host
+Host: https://www.lainabags.com

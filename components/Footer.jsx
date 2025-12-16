@@ -13,7 +13,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white overflow-hidden">
+    <footer className="relative bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 text-white overflow-hidden">
       {/* Top Wave */}
       <div className="absolute top-0 left-0 right-0 -mt-1">
         <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto rotate-180" preserveAspectRatio="none">
