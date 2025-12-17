@@ -128,8 +128,8 @@ const Product = () => {
                     key={index}
                     onClick={() => handleImageClick(index)}
                     className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all ${currentImageIndex === index
-                        ? "border-sky-600 shadow-lg scale-105"
-                        : "border-slate-200 hover:border-sky-300"
+                      ? "border-sky-600 shadow-lg scale-105"
+                      : "border-slate-200 hover:border-sky-300"
                       }`}
                   >
                     <Image
@@ -224,14 +224,28 @@ const Product = () => {
                       <span className="text-sm font-bold text-slate-600 uppercase tracking-wider">Colors</span>
                       <div className="flex gap-2">
                         {productData.colors.map((color, index) => (
-                          <div
+                          <button
                             key={index}
-                            className="w-6 h-6 rounded-full border-2 border-slate-300 shadow-sm"
-                            style={{
-                              backgroundColor: color.startsWith('#') ? color : color.toLowerCase(),
+                            onClick={() => {
+                              // Scroll to color-filtered products section
+                              const colorSection = document.getElementById(`color-products-${color}`);
+                              if (colorSection) {
+                                colorSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                              }
                             }}
-                            title={color}
-                          />
+                            className="group relative"
+                            title={`View products in ${color}`}
+                          >
+                            <div
+                              className="w-8 h-8 rounded-full border-2 border-slate-300 shadow-sm hover:border-sky-500 hover:scale-110 transition-all cursor-pointer"
+                              style={{
+                                backgroundColor: color.startsWith('#') ? color : color.toLowerCase(),
+                              }}
+                            />
+                            <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs font-bold text-slate-600 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                              {color}
+                            </span>
+                          </button>
                         ))}
                       </div>
                     </div>
@@ -244,6 +258,54 @@ const Product = () => {
               </div>
             </div>
           </div>
+
+          {/* Color-Based Product Sections */}
+          {productData.colors && productData.colors.length > 0 && productData.colors.map((color) => {
+            const colorProducts = products.filter((p) =>
+              p._id !== id &&
+              p.category === productData.category &&
+              p.colors &&
+              p.colors.some(c => c.toLowerCase() === color.toLowerCase())
+            );
+
+            if (colorProducts.length === 0) return null;
+
+            return (
+              <div key={color} id={`color-products-${color}`} className="mt-16 pt-12 border-t border-slate-200">
+                <div className="text-center mb-10">
+                  <div className="flex items-center justify-center gap-3 mb-3">
+                    <div
+                      className="w-8 h-8 rounded-full border-2 border-slate-300 shadow-sm"
+                      style={{
+                        backgroundColor: color.startsWith('#') ? color : color.toLowerCase(),
+                      }}
+                    />
+                    <h2 className="text-2xl md:text-3xl font-black text-slate-900">
+                      More Products in {color}
+                    </h2>
+                  </div>
+                  <div className="w-20 h-1 bg-sky-600 mx-auto rounded-full"></div>
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+                  {colorProducts.slice(0, 5).map((product, index) => (
+                    <ProductCard key={index} product={product} />
+                  ))}
+                </div>
+
+                {colorProducts.length > 5 && (
+                  <div className="text-center mt-10">
+                    <button
+                      onClick={() => router.push(`/all-products?category=${encodeURIComponent(productData.category.toLowerCase())}`)}
+                      className="px-8 py-3 bg-sky-600 text-white rounded-xl font-bold text-sm hover:bg-sky-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                    >
+                      View All {color} Products
+                    </button>
+                  </div>
+                )}
+              </div>
+            );
+          })}
 
           {/* Related Products */}
           {products.filter((p) => p._id !== id && p.category === productData.category).length > 0 && (

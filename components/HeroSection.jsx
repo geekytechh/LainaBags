@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { MapPin, ArrowRight, MessageCircle, ShoppingBag, Award, Clock, Users } from "lucide-react";
+import { MapPin, ArrowRight, MessageCircle, ShoppingBag, Award, Clock, Users, X } from "lucide-react";
 
 const HeroSection = () => {
     const router = useRouter();
+    const [isZoomOpen, setIsZoomOpen] = useState(false);
 
     return (
         <div className="relative w-full overflow-hidden bg-gradient-to-r from-blue-900 via-blue-700 to-blue-900 pb-16 md:pb-20">
@@ -93,21 +94,20 @@ const HeroSection = () => {
                         </div>
                     </div>
 
-                    {/* Right Image - Premium Rounded Design */}
+                    {/* Right Image - Optimized with Zoom */}
                     <div className="relative z-10 order-1 lg:order-2">
-                        {/* Main Image Container */}
-                        <div className="relative w-full h-[360px] md:h-[440px] rounded-3xl overflow-hidden shadow-2xl bg-white border border-slate-200">
-                            <div className="absolute inset-0 p-6">
-                                <div className="relative w-full h-full rounded-2xl overflow-hidden">
-                                    <Image
-                                        src="/images/lapp.jpg"
-                                        alt="Laina Bags - Premium Quality Bags"
-                                        fill
-                                        className="object-contain"
-                                        priority
-                                    />
-                                </div>
-                            </div>
+                        {/* Main Image Container - Reduced Padding */}
+                        <div
+                            className="relative w-full h-[360px] md:h-[440px] rounded-3xl overflow-hidden shadow-2xl bg-white border border-slate-200 cursor-zoom-in group"
+                            onClick={() => setIsZoomOpen(true)}
+                        >
+                            <Image
+                                src="/images/lapp.jpg"
+                                alt="Laina Bags - Premium Quality Bags"
+                                fill
+                                className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                priority
+                            />
                         </div>
 
                         {/* Enhanced Decorative Elements */}
@@ -126,6 +126,31 @@ const HeroSection = () => {
                     <path d="M0,50 C240,80 480,20 720,50 C960,80 1200,20 1440,50 L1440,100 L0,100 Z" fill="white" />
                 </svg>
             </div>
+
+            {/* Zoom Modal */}
+            {isZoomOpen && (
+                <div
+                    className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+                    onClick={() => setIsZoomOpen(false)}
+                >
+                    <button
+                        onClick={() => setIsZoomOpen(false)}
+                        className="absolute top-4 right-4 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all z-10"
+                    >
+                        <X className="w-6 h-6 text-white" />
+                    </button>
+
+                    <div className="relative max-w-6xl max-h-[90vh] w-full h-full" onClick={(e) => e.stopPropagation()}>
+                        <Image
+                            src="/images/lapp.jpg"
+                            alt="Laina Bags - Premium Quality Bags"
+                            fill
+                            className="object-contain"
+                            priority
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
