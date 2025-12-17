@@ -24,6 +24,7 @@ const AddProduct = () => {
   const [whatsappNumber, setWhatsappNumber] = useState("+917045010589");
   const [colors, setColors] = useState([]);
   const [colorInput, setColorInput] = useState("");
+  const [isBestseller, setIsBestseller] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [productId, setProductId] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -516,6 +517,22 @@ const AddProduct = () => {
                     placeholder="Enter WhatsApp number with country code"
                   />
                 </div>
+              </div>
+
+              {/* Bestseller Checkbox */}
+              <div className="md:col-span-2">
+                <label className="flex items-center gap-3 px-4 py-3 bg-yellow-50 border-2 border-yellow-200 rounded-xl cursor-pointer hover:bg-yellow-100 transition-all">
+                  <input
+                    type="checkbox"
+                    checked={isBestseller}
+                    onChange={(e) => setIsBestseller(e.target.checked)}
+                    className="w-5 h-5 text-yellow-600 border-yellow-300 rounded focus:ring-yellow-500 focus:ring-2 cursor-pointer"
+                  />
+                  <div className="flex-1">
+                    <span className="block text-sm font-bold text-slate-900">Mark as Bestseller</span>
+                    <span className="block text-xs text-slate-600">This product will be highlighted as a bestseller</span>
+                  </div>
+                </label>
               </div>
             </div>
 

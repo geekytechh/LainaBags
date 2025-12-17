@@ -70,9 +70,12 @@ const HomeProducts = () => {
         ) : products.length > 0 ? (
           <div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {products.map((product, index) => (
-                <ProductCard key={index} product={product} />
-              ))}
+              {products
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 4)
+                .map((product, index) => (
+                  <ProductCard key={index} product={product} />
+                ))}
             </div>
             <button
               onClick={() => router.push("/all-products")}

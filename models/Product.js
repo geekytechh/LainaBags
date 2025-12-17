@@ -15,6 +15,7 @@ const productSchema = new mongoose.Schema({
     default: [],
     // Structure: [{ color: "Red", images: ["url1", "url2"] }, { color: "Blue", images: [...] }]
   },
+  isBestseller: { type: Boolean, default: false }, // Mark as bestseller
   whatsappNumber: { type: String, required: true },
   date: { type: Date, required: true },
 });
