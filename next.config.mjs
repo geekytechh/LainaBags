@@ -14,12 +14,12 @@ const nextConfig = {
   },
   api: {
     bodyParser: {
-      sizeLimit: '10mb',
+      sizeLimit: '50mb', // Increased for color variant uploads
     },
   },
   experimental: {
     serverActions: {
-      bodySizeLimit: '10mb',
+      bodySizeLimit: '50mb', // Increased for color variant uploads
     },
   },
 };

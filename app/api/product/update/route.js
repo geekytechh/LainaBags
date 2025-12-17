@@ -17,15 +17,6 @@ export const maxDuration = 60; // Maximum duration in seconds
 export const dynamic = 'force-dynamic'; // Disable static optimization
 export const runtime = 'nodejs'; // Use Node.js runtime for larger payloads
 
-// Increase body size limit for color variant uploads
-export const config = {
-    api: {
-        bodyParser: {
-            sizeLimit: '50mb', // Increased from default 4mb
-        },
-    },
-};
-
 export async function PUT(request) {
     try {
         const { userId } = getAuth(request)
