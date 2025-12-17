@@ -32,6 +32,7 @@ export async function PUT(request) {
         const name = formData.get('name');
         const description = formData.get('description');
         const category = formData.get('category');
+        const subsection = formData.get('subsection');
         const price = formData.get('price');
         const offerPrice = formData.get('offerPrice');
         const whatsappNumber = formData.get('whatsappNumber');
@@ -50,11 +51,6 @@ export async function PUT(request) {
 
         if (!product) {
             return NextResponse.json({ success: false, message: 'Product not found' }, { status: 404 })
-        }
-
-        // Check if this is the product owner
-        if (product.userId !== userId) {
-            return NextResponse.json({ success: false, message: 'Not authorized to update this product' }, { status: 403 })
         }
 
         let image = [];
@@ -101,6 +97,7 @@ export async function PUT(request) {
                 name,
                 description,
                 category,
+                subsection: subsection || "",
                 price: Number(price),
                 offerPrice: Number(offerPrice),
                 whatsappNumber,

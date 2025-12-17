@@ -18,6 +18,7 @@ const AddProduct = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Backpack");
+  const [subsection, setSubsection] = useState("");
   const [price, setPrice] = useState("");
   const [offerPrice, setOfferPrice] = useState("");
   const [whatsappNumber, setWhatsappNumber] = useState("+917045010589");
@@ -26,6 +27,7 @@ const AddProduct = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [productId, setProductId] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [draggedIndex, setDraggedIndex] = useState(null);
 
   useEffect(() => {
     if (editId) {
@@ -49,6 +51,7 @@ const AddProduct = () => {
         setName(product.name || "");
         setDescription(product.description || "");
         setCategory(product.category || "Backpack");
+        setSubsection(product.subsection || "");
         setPrice(product.price || "");
         setOfferPrice(product.offerPrice || "");
         setWhatsappNumber(product.whatsappNumber || "+917045010589");
@@ -77,6 +80,7 @@ const AddProduct = () => {
     formData.append("name", name);
     formData.append("description", description);
     formData.append("category", category);
+    formData.append("subsection", subsection);
     formData.append("price", price);
     formData.append("offerPrice", offerPrice);
     formData.append("whatsappNumber", whatsappNumber);
@@ -130,6 +134,7 @@ const AddProduct = () => {
     setName("");
     setDescription("");
     setCategory("Backpack");
+    setSubsection("");
     setPrice("");
     setOfferPrice("");
     setColors([]);
@@ -199,6 +204,52 @@ const AddProduct = () => {
     const newPreviews = [...previewImages];
     newPreviews.splice(index, 1);
     setPreviewImages(newPreviews);
+  };
+
+  const handleDragStart = (e, index) => {
+    setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+  };
+
+  const handleDrop = (e, dropIndex) => {
+    e.preventDefault();
+
+    if (draggedIndex === null || draggedIndex === dropIndex) {
+      setDraggedIndex(null);
+      return;
+    }
+
+    const newPreviews = [...previewImages];
+    const draggedPreview = newPreviews[draggedIndex];
+    newPreviews.splice(draggedIndex, 1);
+    newPreviews.splice(dropIndex, 0, draggedPreview);
+
+    // Also reorder files array if dealing with blob URLs
+    const newFiles = [...files];
+    const draggedIsBlob = previewImages[draggedIndex].startsWith("blob:");
+    const dropIsBlob = previewImages[dropIndex].startsWith("blob:");
+
+    if (draggedIsBlob && dropIsBlob) {
+      const draggedBlobIndex = previewImages
+        .slice(0, draggedIndex)
+        .filter((url) => url.startsWith("blob:")).length;
+      const dropBlobIndex = previewImages
+        .slice(0, dropIndex)
+        .filter((url) => url.startsWith("blob:")).length;
+
+      const draggedFile = newFiles[draggedBlobIndex];
+      newFiles.splice(draggedBlobIndex, 1);
+      newFiles.splice(dropBlobIndex, 0, draggedFile);
+      setFiles(newFiles);
+    }
+
+    setPreviewImages(newPreviews);
+    setDraggedIndex(null);
   };
 
   return (
@@ -283,6 +334,33 @@ const AddProduct = () => {
                 </div>
               </div>
 
+              {/* Subsection (only for Accessories) */}
+              {category === "Accessories" && (
+                <div>
+                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                    Subsection *
+                  </label>
+                  <div className="relative">
+                    <Package className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                    <select
+                      value={subsection}
+                      onChange={(e) => setSubsection(e.target.value)}
+                      required={category === "Accessories"}
+                      className="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300 appearance-none bg-white"
+                    >
+                      <option value="">Select Subsection</option>
+                      <option value="Keychains">Keychains</option>
+                      <option value="Wallets">Wallets</option>
+                      <option value="Pouches">Pouches</option>
+                      <option value="Straps">Straps</option>
+                      <option value="Card Holders">Card Holders</option>
+                      <option value="Organizers">Organizers</option>
+                      <option value="Others">Others</option>
+                    </select>
+                  </div>
+                </div>
+              )}
+
               {/* Price */}
               <div>
                 <label className="block text-sm font-bold text-slate-700 mb-2">
@@ -340,6 +418,74 @@ const AddProduct = () => {
               </div>
             </div>
 
+            {/* Colors */}
+            <div>
+              <label className="block text-sm font-bold text-slate-700 mb-3">
+                Available Colors
+              </label>
+              <div className="flex gap-2 mb-3">
+                <input
+                  type="text"
+                  value={colorInput}
+                  onChange={(e) => setColorInput(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      if (colorInput.trim() && !colors.includes(colorInput.trim())) {
+                        setColors([...colors, colorInput.trim()]);
+                        setColorInput("");
+                      }
+                    }
+                  }}
+                  className="flex-1 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
+                  placeholder="Enter color name or hex code (e.g., Red or #FF0000)"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (colorInput.trim() && !colors.includes(colorInput.trim())) {
+                      setColors([...colors, colorInput.trim()]);
+                      setColorInput("");
+                    }
+                  }}
+                  className="px-6 py-3 bg-blue-600 text-white rounded-xl font-bold text-sm hover:bg-blue-700 transition-all shadow-lg"
+                >
+                  Add Color
+                </button>
+              </div>
+              {colors.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {colors.map((color, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-2 px-4 py-2 bg-slate-100 border border-slate-200 rounded-xl group hover:bg-slate-200 transition-all"
+                    >
+                      <div
+                        className="w-6 h-6 rounded-full border-2 border-slate-300 shadow-sm"
+                        style={{
+                          backgroundColor: color.startsWith('#') ? color : color.toLowerCase(),
+                        }}
+                      />
+                      <span className="text-sm font-bold text-slate-700">{color}</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newColors = colors.filter((_, i) => i !== index);
+                          setColors(newColors);
+                        }}
+                        className="ml-1 text-slate-400 hover:text-red-600 transition-colors"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <p className="text-sm text-slate-500 mt-2">
+                Add colors available for this product. You can use color names (e.g., Red, Blue) or hex codes (e.g., #FF0000).
+              </p>
+            </div>
+
             {/* Product Images */}
             <div>
               <label className="block text-sm font-bold text-slate-700 mb-3">
@@ -349,14 +495,26 @@ const AddProduct = () => {
                 {previewImages.map((image, index) => (
                   <div
                     key={index}
-                    className="relative w-24 h-24 border-2 border-slate-200 rounded-xl overflow-hidden shadow-lg group"
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, index)}
+                    onDragOver={handleDragOver}
+                    onDrop={(e) => handleDrop(e, index)}
+                    className={`relative w-24 h-24 border-2 rounded-xl overflow-hidden shadow-lg group cursor-move transition-all ${draggedIndex === index
+                        ? "opacity-50 scale-95 border-blue-500"
+                        : "border-slate-200 hover:border-blue-400"
+                      }`}
                   >
                     <Image
                       src={image}
                       alt={`Preview ${index}`}
                       fill
-                      className="object-cover"
+                      className="object-cover pointer-events-none"
                     />
+                    {index === 0 && (
+                      <div className="absolute bottom-0 left-0 right-0 bg-blue-600 text-white text-xs font-bold text-center py-1">
+                        Main
+                      </div>
+                    )}
                     <button
                       type="button"
                       onClick={() => removeImage(index)}
@@ -379,7 +537,7 @@ const AddProduct = () => {
                 </label>
               </div>
               <p className="text-sm text-slate-500">
-                Upload up to 5 images. First image will be used as the product thumbnail.
+                Upload up to 5 images. First image will be used as the product thumbnail. Drag images to reorder.
               </p>
             </div>
 

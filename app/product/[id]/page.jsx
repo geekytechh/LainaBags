@@ -5,13 +5,15 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import Loading from "@/components/Loading";
 import { useAppContext } from "@/context/AppContext";
-import { MessageCircle, CheckCircle2, Package } from "lucide-react";
+import { MessageCircle, CheckCircle2, Package, ChevronLeft, ChevronRight, X, ZoomIn } from "lucide-react";
 
 const Product = () => {
   const { id } = useParams();
   const { products, router } = useAppContext();
   const [mainImage, setMainImage] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [productData, setProductData] = useState(null);
+  const [isZoomOpen, setIsZoomOpen] = useState(false);
 
   const fetchProductData = async () => {
     const product = products.find((product) => product._id === id);
@@ -24,11 +26,58 @@ const Product = () => {
     }
   }, [id, products]);
 
+  useEffect(() => {
+    if (!productData) return;
+
+    const handleKeyDown = (e) => {
+      if (isZoomOpen) {
+        if (e.key === 'Escape') {
+          setIsZoomOpen(false);
+        } else if (e.key === 'ArrowLeft') {
+          handlePrevImage();
+        } else if (e.key === 'ArrowRight') {
+          handleNextImage();
+        }
+      } else {
+        if (e.key === 'ArrowLeft') {
+          handlePrevImage();
+        } else if (e.key === 'ArrowRight') {
+          handleNextImage();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [productData, currentImageIndex, isZoomOpen]);
+
   if (!productData) return <Loading />;
 
   const discount = Math.round(
     ((productData.price - productData.offerPrice) / productData.price) * 100
   );
+
+  const hasMultipleImages = productData.image && productData.image.length > 1;
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? productData.image.length - 1 : prev - 1
+    );
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prev) =>
+      prev === productData.image.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const handleImageClick = (index) => {
+    setCurrentImageIndex(index);
+  };
+
+  const handleZoomClick = () => {
+    setIsZoomOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -37,15 +86,39 @@ const Product = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Product Images */}
             <div>
-              <div className="mb-4 bg-white rounded-2xl border border-slate-200 p-6 shadow-lg">
+              <div className="mb-4 bg-white rounded-2xl border border-slate-200 p-6 shadow-lg relative group">
                 <div className="relative aspect-square">
                   <Image
-                    src={mainImage || productData.image[0]}
+                    src={productData.image[currentImageIndex]}
                     alt={productData.name}
                     fill
-                    className="object-contain rounded-xl"
+                    className="object-contain rounded-xl cursor-zoom-in"
                     priority
+                    onClick={handleZoomClick}
                   />
+
+                  {/* Navigation Arrows */}
+                  {hasMultipleImages && (
+                    <>
+                      <button
+                        onClick={handlePrevImage}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-white shadow-lg z-10"
+                      >
+                        <ChevronLeft className="w-6 h-6 text-slate-700" />
+                      </button>
+                      <button
+                        onClick={handleNextImage}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-white shadow-lg z-10"
+                      >
+                        <ChevronRight className="w-6 h-6 text-slate-700" />
+                      </button>
+                    </>
+                  )}
+
+                  {/* Zoom Icon */}
+                  <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm rounded-lg p-2 opacity-0 group-hover:opacity-100 transition-all">
+                    <ZoomIn className="w-5 h-5 text-slate-700" />
+                  </div>
                 </div>
               </div>
 
@@ -53,12 +126,11 @@ const Product = () => {
                 {productData.image.map((image, index) => (
                   <button
                     key={index}
-                    onClick={() => setMainImage(image)}
-                    className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all ${
-                      (mainImage || productData.image[0]) === image
+                    onClick={() => handleImageClick(index)}
+                    className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all ${currentImageIndex === index
                         ? "border-sky-600 shadow-lg scale-105"
                         : "border-slate-200 hover:border-sky-300"
-                    }`}
+                      }`}
                   >
                     <Image
                       src={image}
@@ -106,6 +178,7 @@ const Product = () => {
                 <span className="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 rounded-xl text-sm font-bold text-slate-700">
                   <Package className="w-4 h-4" />
                   {productData.category}
+                  {productData.subsection && ` - ${productData.subsection}`}
                 </span>
               </div>
 
@@ -115,7 +188,7 @@ const Product = () => {
                   <CheckCircle2 className="w-5 h-5 text-sky-600" />
                   Description
                 </h3>
-                <p className="text-slate-700 leading-relaxed">
+                <p className="text-slate-700 leading-relaxed" style={{ whiteSpace: 'pre-wrap' }}>
                   {productData.description}
                 </p>
               </div>
@@ -146,6 +219,23 @@ const Product = () => {
                     <span className="text-sm font-bold text-slate-600 uppercase tracking-wider">Category</span>
                     <span className="text-sm font-bold text-slate-900">{productData.category}</span>
                   </div>
+                  {productData.colors && productData.colors.length > 0 && (
+                    <div className="flex justify-between items-center py-2 border-b border-slate-200">
+                      <span className="text-sm font-bold text-slate-600 uppercase tracking-wider">Colors</span>
+                      <div className="flex gap-2">
+                        {productData.colors.map((color, index) => (
+                          <div
+                            key={index}
+                            className="w-6 h-6 rounded-full border-2 border-slate-300 shadow-sm"
+                            style={{
+                              backgroundColor: color.startsWith('#') ? color : color.toLowerCase(),
+                            }}
+                            title={color}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <div className="flex justify-between items-center py-2">
                     <span className="text-sm font-bold text-slate-600 uppercase tracking-wider">Quality</span>
                     <span className="text-sm font-bold text-sky-600">Premium</span>
@@ -186,6 +276,59 @@ const Product = () => {
           )}
         </div>
       </div>
+
+      {/* Zoom Modal */}
+      {isZoomOpen && (
+        <div
+          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+          onClick={() => setIsZoomOpen(false)}
+        >
+          <button
+            onClick={() => setIsZoomOpen(false)}
+            className="absolute top-4 right-4 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all z-10"
+          >
+            <X className="w-6 h-6 text-white" />
+          </button>
+
+          {hasMultipleImages && (
+            <>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrevImage();
+                }}
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all z-10"
+              >
+                <ChevronLeft className="w-8 h-8 text-white" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNextImage();
+                }}
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all z-10"
+              >
+                <ChevronRight className="w-8 h-8 text-white" />
+              </button>
+            </>
+          )}
+
+          <div className="relative max-w-5xl max-h-[90vh] w-full h-full" onClick={(e) => e.stopPropagation()}>
+            <Image
+              src={productData.image[currentImageIndex]}
+              alt={productData.name}
+              fill
+              className="object-contain"
+              priority
+            />
+          </div>
+
+          {/* Image Counter */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-white font-bold">
+            {currentImageIndex + 1} / {productData.image.length}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

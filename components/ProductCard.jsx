@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { MessageCircle, ShoppingBag } from "lucide-react";
+import { MessageCircle, ShoppingBag, ChevronLeft, ChevronRight } from "lucide-react";
 
 const ProductCard = ({ product }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const currency = process.env.NEXT_PUBLIC_CURRENCY;
   const discount = product.price > product.offerPrice
     ? Math.round(((product.price - product.offerPrice) / product.price) * 100)
     : 0;
+
+  const hasMultipleImages = product.image && product.image.length > 1;
+
+  const handlePrevImage = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? product.image.length - 1 : prev - 1
+    );
+  };
+
+  const handleNextImage = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentImageIndex((prev) =>
+      prev === product.image.length - 1 ? 0 : prev + 1
+    );
+  };
 
   return (
     <Link href={`/product/${product._id}`}>
@@ -34,9 +53,40 @@ const ProductCard = ({ product }) => {
             </button>
           </div>
 
+          {/* Image Navigation Buttons */}
+          {hasMultipleImages && (
+            <>
+              <button
+                onClick={handlePrevImage}
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-white shadow-lg"
+              >
+                <ChevronLeft className="w-5 h-5 text-slate-700" />
+              </button>
+              <button
+                onClick={handleNextImage}
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:bg-white shadow-lg"
+              >
+                <ChevronRight className="w-5 h-5 text-slate-700" />
+              </button>
+
+              {/* Image Indicators */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 z-20 flex gap-1">
+                {product.image.map((_, index) => (
+                  <div
+                    key={index}
+                    className={`w-1.5 h-1.5 rounded-full transition-all ${index === currentImageIndex
+                        ? "bg-white w-4"
+                        : "bg-white/50"
+                      }`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+
           {/* Image */}
           <Image
-            src={product.image?.[0] || "/images/logo.png"}
+            src={product.image?.[currentImageIndex] || "/images/logo.png"}
             alt={product.name}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -71,7 +121,7 @@ const ProductCard = ({ product }) => {
             {product.name}
           </h3>
 
-          <p className="text-sm text-slate-600 mb-3 line-clamp-2 leading-relaxed flex-grow">
+          <p className="text-sm text-slate-600 mb-3 line-clamp-2 leading-relaxed flex-grow" style={{ whiteSpace: 'pre-wrap' }}>
             {product.description}
           </p>
 
