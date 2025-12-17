@@ -36,6 +36,7 @@ export async function POST(request) {
         const offerPrice = formData.get('offerPrice');
         const whatsappNumber = formData.get('whatsappNumber');
         const colorsJson = formData.get('colors');
+        const colorVariantsJson = formData.get('colorVariants');
 
         // Validate required fields
         if (!name || !description || !category || !price || !offerPrice) {
@@ -48,6 +49,7 @@ export async function POST(request) {
             return NextResponse.json({ success: false, message: 'no files uploaded' }, { status: 400 })
         }
 
+        // Upload main product images
         const result = await Promise.all(
             files.map(async (file) => {
                 const arrayBuffer = await file.arrayBuffer()
@@ -71,6 +73,53 @@ export async function POST(request) {
 
         const image = result.map(result => result.secure_url)
 
+        // Handle color variants
+        let colorVariants = [];
+        if (colorVariantsJson) {
+            const variantsData = JSON.parse(colorVariantsJson);
+
+            // Upload images for each color variant
+            colorVariants = await Promise.all(
+                variantsData.map(async (variant) => {
+                    const variantFiles = formData.getAll(`variant_${variant.color}`);
+
+                    if (variantFiles && variantFiles.length > 0) {
+                        const variantResults = await Promise.all(
+                            variantFiles.map(async (file) => {
+                                const arrayBuffer = await file.arrayBuffer()
+                                const buffer = Buffer.from(arrayBuffer)
+
+                                return new Promise((resolve, reject) => {
+                                    const stream = cloudinary.uploader.upload_stream(
+                                        { resource_type: 'auto' },
+                                        (error, result) => {
+                                            if (error) {
+                                                reject(error)
+                                            } else {
+                                                resolve(result)
+                                            }
+                                        }
+                                    )
+                                    stream.end(buffer)
+                                })
+                            })
+                        );
+
+                        const variantImages = variantResults.map(r => r.secure_url);
+
+                        return {
+                            color: variant.color,
+                            images: variantImages
+                        };
+                    }
+                    return null;
+                })
+            );
+
+            // Filter out null values
+            colorVariants = colorVariants.filter(v => v !== null);
+        }
+
         await connectDB()
         const newProduct = await Product.create({
             userId,
@@ -83,6 +132,7 @@ export async function POST(request) {
             whatsappNumber,
             image,
             colors: colorsJson ? JSON.parse(colorsJson) : [],
+            colorVariants: colorVariants,
             date: Date.now()
         })
 
