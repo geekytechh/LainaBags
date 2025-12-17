@@ -284,7 +284,7 @@ const AddProduct = () => {
     try {
       const imageCompression = (await import('browser-image-compression')).default;
       const options = {
-        maxSizeMB: 0.8,
+        maxSizeMB: 0.5, // Reduced from 0.8 to prevent 413 errors
         maxWidthOrHeight: 1920,
         useWebWorker: true,
         fileType: 'image/jpeg',
