@@ -6,10 +6,15 @@ const productSchema = new mongoose.Schema({
   description: { type: String, required: true },
   price: { type: Number, required: true },
   offerPrice: { type: Number, required: true },
-  image: { type: Array, required: true },
+  image: { type: Array, required: true }, // Default/first variant images
   category: { type: String, required: true },
   subsection: { type: String, default: "" },
-  colors: { type: Array, default: [] },
+  colors: { type: Array, default: [] }, // Keep for backward compatibility
+  colorVariants: {
+    type: Array,
+    default: [],
+    // Structure: [{ color: "Red", images: ["url1", "url2"] }, { color: "Blue", images: [...] }]
+  },
   whatsappNumber: { type: String, required: true },
   date: { type: Date, required: true },
 });

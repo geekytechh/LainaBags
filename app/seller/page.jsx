@@ -29,6 +29,12 @@ const AddProduct = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [draggedIndex, setDraggedIndex] = useState(null);
 
+  // Color Variants State
+  const [colorVariants, setColorVariants] = useState([]);
+  const [currentVariantColor, setCurrentVariantColor] = useState("");
+  const [currentVariantFiles, setCurrentVariantFiles] = useState([]);
+  const [currentVariantPreviews, setCurrentVariantPreviews] = useState([]);
+
   useEffect(() => {
     if (editId) {
       setIsEditing(true);
@@ -252,6 +258,93 @@ const AddProduct = () => {
     setDraggedIndex(null);
   };
 
+  // Color Variant Functions
+  const handleVariantFileChange = async (e) => {
+    const newFiles = Array.from(e.target.files);
+
+    try {
+      const imageCompression = (await import('browser-image-compression')).default;
+      const options = {
+        maxSizeMB: 0.8,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+        fileType: 'image/jpeg',
+      };
+
+      const loadingToast = toast.loading('Compressing images...');
+      const compressedFiles = await Promise.all(
+        newFiles.map(async (file) => {
+          try {
+            return await imageCompression(file, options);
+          } catch (error) {
+            console.error('Error compressing image:', error);
+            return file;
+          }
+        })
+      );
+
+      toast.dismiss(loadingToast);
+      toast.success(`${compressedFiles.length} image(s) compressed successfully!`);
+
+      const newPreviews = compressedFiles.map((file) => URL.createObjectURL(file));
+      setCurrentVariantFiles((prev) => [...prev, ...compressedFiles]);
+      setCurrentVariantPreviews((prev) => [...prev, ...newPreviews]);
+    } catch (error) {
+      console.error('Error in handleVariantFileChange:', error);
+      toast.error('Error processing images');
+    }
+  };
+
+  const removeVariantImage = (index) => {
+    const newFiles = [...currentVariantFiles];
+    const newPreviews = [...currentVariantPreviews];
+
+    URL.revokeObjectURL(newPreviews[index]);
+    newFiles.splice(index, 1);
+    newPreviews.splice(index, 1);
+
+    setCurrentVariantFiles(newFiles);
+    setCurrentVariantPreviews(newPreviews);
+  };
+
+  const addColorVariant = () => {
+    if (!currentVariantColor) {
+      toast.error('Please select a color');
+      return;
+    }
+    if (currentVariantFiles.length === 0) {
+      toast.error('Please upload at least one image for this color variant');
+      return;
+    }
+
+    // Check if color already exists
+    if (colorVariants.some(v => v.color === currentVariantColor)) {
+      toast.error(`${currentVariantColor} variant already exists`);
+      return;
+    }
+
+    const newVariant = {
+      color: currentVariantColor,
+      files: currentVariantFiles,
+      previews: currentVariantPreviews,
+    };
+
+    setColorVariants([...colorVariants, newVariant]);
+    setCurrentVariantColor("");
+    setCurrentVariantFiles([]);
+    setCurrentVariantPreviews([]);
+    toast.success(`${currentVariantColor} variant added!`);
+  };
+
+  const removeColorVariant = (color) => {
+    const variant = colorVariants.find(v => v.color === color);
+    if (variant) {
+      variant.previews.forEach(preview => URL.revokeObjectURL(preview));
+    }
+    setColorVariants(colorVariants.filter(v => v.color !== color));
+    toast.success(`${color} variant removed`);
+  };
+
   return (
     <div className="flex-1 bg-slate-50 min-h-screen">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -418,61 +511,14 @@ const AddProduct = () => {
               </div>
             </div>
 
-            {/* Color Variant - Single Selection */}
+            {/* Main Product Images */}
             <div>
               <label className="block text-sm font-bold text-slate-700 mb-3">
-                Product Color *
+                Main Product Images *
               </label>
               <p className="text-sm text-slate-500 mb-3">
-                Select the color for this product variant. To add the same product in different colors, create separate product entries for each color.
+                Upload images for the default/first color variant
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                {[
-                  { name: 'Black', value: '#000000' },
-                  { name: 'White', value: '#FFFFFF' },
-                  { name: 'Red', value: '#DC2626' },
-                  { name: 'Blue', value: '#2563EB' },
-                  { name: 'Green', value: '#16A34A' },
-                  { name: 'Yellow', value: '#EAB308' },
-                  { name: 'Orange', value: '#EA580C' },
-                  { name: 'Purple', value: '#9333EA' },
-                  { name: 'Pink', value: '#EC4899' },
-                  { name: 'Brown', value: '#92400E' },
-                  { name: 'Gray', value: '#6B7280' },
-                  { name: 'Navy', value: '#1E3A8A' },
-                ].map((color) => (
-                  <button
-                    key={color.name}
-                    type="button"
-                    onClick={() => setColors([color.name])}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all ${colors.includes(color.name)
-                        ? 'border-blue-600 bg-blue-50 shadow-lg'
-                        : 'border-slate-200 bg-white hover:border-blue-300 hover:bg-slate-50'
-                      }`}
-                  >
-                    <div
-                      className="w-8 h-8 rounded-full border-2 border-slate-300 shadow-sm flex-shrink-0"
-                      style={{ backgroundColor: color.value }}
-                    />
-                    <span className={`text-sm font-bold ${colors.includes(color.name) ? 'text-blue-900' : 'text-slate-700'
-                      }`}>
-                      {color.name}
-                    </span>
-                  </button>
-                ))}
-              </div>
-              {colors.length === 0 && (
-                <p className="text-sm text-red-600 mt-2">
-                  Please select a color for this product variant
-                </p>
-              )}
-            </div>
-
-            {/* Product Images */}
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-3">
-                Product Images *
-              </label>
               <div className="flex flex-wrap gap-4 mb-4">
                 {previewImages.map((image, index) => (
                   <div
@@ -521,6 +567,161 @@ const AddProduct = () => {
               <p className="text-sm text-slate-500">
                 Upload up to 5 images. First image will be used as the product thumbnail. Drag images to reorder.
               </p>
+            </div>
+
+            {/* Color Variants Section */}
+            <div className="md:col-span-2 mt-8 p-6 bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl border-2 border-purple-200">
+              <h3 className="text-xl font-black text-slate-900 mb-2 flex items-center gap-2">
+                <Package className="w-6 h-6 text-purple-600" />
+                Color Variants (Optional)
+              </h3>
+              <p className="text-sm text-slate-600 mb-6">
+                Add different color variants with their own images. Customers can switch between colors on the product page.
+              </p>
+
+              {/* Add New Variant Form */}
+              <div className="bg-white p-6 rounded-xl border border-purple-200 mb-6">
+                <h4 className="text-lg font-bold text-slate-900 mb-4">Add Color Variant</h4>
+
+                {/* Color Selection */}
+                <div className="mb-4">
+                  <label className="block text-sm font-bold text-slate-700 mb-2">
+                    Select Color
+                  </label>
+                  <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
+                    {[
+                      { name: 'Black', value: '#000000' },
+                      { name: 'White', value: '#FFFFFF' },
+                      { name: 'Red', value: '#DC2626' },
+                      { name: 'Blue', value: '#2563EB' },
+                      { name: 'Green', value: '#16A34A' },
+                      { name: 'Yellow', value: '#EAB308' },
+                      { name: 'Orange', value: '#EA580C' },
+                      { name: 'Purple', value: '#9333EA' },
+                      { name: 'Pink', value: '#EC4899' },
+                      { name: 'Brown', value: '#92400E' },
+                      { name: 'Gray', value: '#6B7280' },
+                      { name: 'Navy', value: '#1E3A8A' },
+                    ].map((color) => (
+                      <button
+                        key={color.name}
+                        type="button"
+                        onClick={() => setCurrentVariantColor(color.name)}
+                        className={`flex flex-col items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all ${currentVariantColor === color.name
+                          ? 'border-purple-600 bg-purple-50 shadow-lg'
+                          : 'border-slate-200 bg-white hover:border-purple-300'
+                          }`}
+                      >
+                        <div
+                          className="w-8 h-8 rounded-full border-2 border-slate-300 shadow-sm"
+                          style={{ backgroundColor: color.value }}
+                        />
+                        <span className="text-xs font-bold text-slate-700">{color.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Upload Images for Variant */}
+                {currentVariantColor && (
+                  <div className="mb-4">
+                    <label className="block text-sm font-bold text-slate-700 mb-2">
+                      Upload Images for {currentVariantColor}
+                    </label>
+                    <div className="flex flex-wrap gap-4 mb-3">
+                      {currentVariantPreviews.map((image, index) => (
+                        <div
+                          key={index}
+                          className="relative w-20 h-20 border-2 border-purple-200 rounded-lg overflow-hidden shadow-md group"
+                        >
+                          <Image
+                            src={image}
+                            alt={`${currentVariantColor} ${index}`}
+                            fill
+                            className="object-cover"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => removeVariantImage(index)}
+                            className="absolute top-1 right-1 bg-red-500 text-white rounded-lg p-1 hover:bg-red-600 transition-all opacity-0 group-hover:opacity-100"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </div>
+                      ))}
+                      <label className="flex flex-col items-center justify-center w-20 h-20 border-2 border-dashed border-purple-300 rounded-lg cursor-pointer hover:bg-purple-50 hover:border-purple-400 transition-all">
+                        <Upload className="w-5 h-5 text-purple-400 mb-1" />
+                        <span className="text-xs font-bold text-purple-600">Add</span>
+                        <input
+                          type="file"
+                          className="hidden"
+                          onChange={handleVariantFileChange}
+                          accept="image/*"
+                          multiple
+                        />
+                      </label>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={addColorVariant}
+                      className="px-6 py-2.5 bg-purple-600 text-white rounded-lg font-bold text-sm hover:bg-purple-700 transition-all shadow-lg"
+                    >
+                      Add {currentVariantColor} Variant
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Display Added Variants */}
+              {colorVariants.length > 0 && (
+                <div>
+                  <h4 className="text-lg font-bold text-slate-900 mb-4">Added Color Variants ({colorVariants.length})</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {colorVariants.map((variant) => (
+                      <div
+                        key={variant.color}
+                        className="bg-white p-4 rounded-xl border border-purple-200 shadow-sm"
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-3">
+                            <div
+                              className="w-10 h-10 rounded-full border-2 border-slate-300 shadow-sm"
+                              style={{
+                                backgroundColor: variant.color.startsWith('#')
+                                  ? variant.color
+                                  : variant.color.toLowerCase()
+                              }}
+                            />
+                            <div>
+                              <h5 className="font-bold text-slate-900">{variant.color}</h5>
+                              <p className="text-xs text-slate-500">{variant.previews.length} images</p>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => removeColorVariant(variant.color)}
+                            className="px-3 py-1.5 bg-red-100 text-red-600 rounded-lg text-xs font-bold hover:bg-red-200 transition-all"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                        <div className="flex gap-2 overflow-x-auto">
+                          {variant.previews.slice(0, 4).map((img, idx) => (
+                            <div key={idx} className="relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border border-slate-200">
+                              <Image src={img} alt={`${variant.color} ${idx}`} fill className="object-cover" />
+                            </div>
+                          ))}
+                          {variant.previews.length > 4 && (
+                            <div className="w-16 h-16 flex-shrink-0 rounded-lg bg-slate-100 flex items-center justify-center border border-slate-200">
+                              <span className="text-xs font-bold text-slate-600">+{variant.previews.length - 4}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Submit Buttons */}
