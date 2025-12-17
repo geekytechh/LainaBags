@@ -29,12 +29,6 @@ const AddProduct = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [draggedIndex, setDraggedIndex] = useState(null);
 
-  // Color Variants State
-  const [colorVariants, setColorVariants] = useState([]);
-  const [currentVariantColor, setCurrentVariantColor] = useState("");
-  const [currentVariantFiles, setCurrentVariantFiles] = useState([]);
-  const [currentVariantPreviews, setCurrentVariantPreviews] = useState([]);
-
   useEffect(() => {
     if (editId) {
       setIsEditing(true);
@@ -159,11 +153,6 @@ const AddProduct = () => {
     setOfferPrice("");
     setColors([]);
     setColorInput("");
-    // Clear color variants
-    setColorVariants([]);
-    setCurrentVariantColor("");
-    setCurrentVariantFiles([]);
-    setCurrentVariantPreviews([]);
   };
 
   const handleFileChange = async (e) => {
