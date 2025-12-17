@@ -105,7 +105,7 @@ const HeroSection = () => {
                                 src="/images/lapp.jpg"
                                 alt="Laina Bags - Premium Quality Bags"
                                 fill
-                                className="object-cover"
+                                className="object-contain"
                                 priority
                             />
                         </div>

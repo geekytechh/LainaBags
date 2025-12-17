@@ -52,7 +52,10 @@ const ProductCard = ({ product }) => {
 
 
           {/* Category Badge - Positioned below bestseller if present */}
-          <div className={`absolute ${product.isBestseller ? 'top-14' : 'top-2.5'} right-2.5 z-20`}>
+          <div
+            className="absolute right-2.5 z-20"
+            style={{ top: product.isBestseller ? '3.5rem' : '0.625rem' }}
+          >
             <button
               onClick={(e) => {
                 e.preventDefault();
