@@ -37,7 +37,8 @@ export async function POST(request) {
         const offerPrice = formData.get('offerPrice');
         const whatsappNumber = formData.get('whatsappNumber');
         const colorsJson = formData.get('colors');
-        const isBestseller = formData.get('isBestseller') === 'true';
+        const isBestsellerValue = formData.get('isBestseller');
+        const isBestseller = isBestsellerValue === 'true' || isBestsellerValue === true;
 
         // Validate required fields
         if (!name || !description || !category || !price || !offerPrice) {

@@ -141,6 +141,7 @@ const AddProduct = () => {
     setOfferPrice("");
     setColors([]);
     setColorInput("");
+    setIsBestseller(false);
   };
 
   const handleFileChange = async (e) => {

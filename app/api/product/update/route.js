@@ -39,6 +39,8 @@ export async function PUT(request) {
         const whatsappNumber = formData.get('whatsappNumber');
         const existingImagesJson = formData.get('existingImages');
         const colorsJson = formData.get('colors');
+        const isBestsellerValue = formData.get('isBestseller');
+        const isBestseller = isBestsellerValue === 'true' || isBestsellerValue === true;
 
         // Validate required fields
         if (!productId || !name || !description || !category || !price || !offerPrice) {
@@ -104,6 +106,7 @@ export async function PUT(request) {
                 whatsappNumber,
                 image,
                 colors: colorsJson ? JSON.parse(colorsJson) : product.colors || [],
+                isBestseller: isBestseller,
                 // Don't update the date to keep the original creation date
             },
             { new: true } // Return the updated document
