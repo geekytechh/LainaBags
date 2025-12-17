@@ -418,72 +418,54 @@ const AddProduct = () => {
               </div>
             </div>
 
-            {/* Colors */}
+            {/* Color Variant - Single Selection */}
             <div>
               <label className="block text-sm font-bold text-slate-700 mb-3">
-                Available Colors
+                Product Color *
               </label>
-              <div className="flex gap-2 mb-3">
-                <input
-                  type="text"
-                  value={colorInput}
-                  onChange={(e) => setColorInput(e.target.value)}
-                  onKeyPress={(e) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      if (colorInput.trim() && !colors.includes(colorInput.trim())) {
-                        setColors([...colors, colorInput.trim()]);
-                        setColorInput("");
-                      }
-                    }
-                  }}
-                  className="flex-1 px-4 py-3 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-300"
-                  placeholder="Enter color name or hex code (e.g., Red or #FF0000)"
-                />
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (colorInput.trim() && !colors.includes(colorInput.trim())) {
-                      setColors([...colors, colorInput.trim()]);
-                      setColorInput("");
-                    }
-                  }}
-                  className="px-6 py-3 bg-blue-600 text-white rounded-xl font-bold text-sm hover:bg-blue-700 transition-all shadow-lg"
-                >
-                  Add Color
-                </button>
-              </div>
-              {colors.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {colors.map((color, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-2 px-4 py-2 bg-slate-100 border border-slate-200 rounded-xl group hover:bg-slate-200 transition-all"
-                    >
-                      <div
-                        className="w-6 h-6 rounded-full border-2 border-slate-300 shadow-sm"
-                        style={{
-                          backgroundColor: color.startsWith('#') ? color : color.toLowerCase(),
-                        }}
-                      />
-                      <span className="text-sm font-bold text-slate-700">{color}</span>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const newColors = colors.filter((_, i) => i !== index);
-                          setColors(newColors);
-                        }}
-                        className="ml-1 text-slate-400 hover:text-red-600 transition-colors"
-                      >
-                        <X className="w-4 h-4" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-              <p className="text-sm text-slate-500 mt-2">
-                Add colors available for this product. You can use color names (e.g., Red, Blue) or hex codes (e.g., #FF0000).
+              <p className="text-sm text-slate-500 mb-3">
+                Select the color for this product variant. To add the same product in different colors, create separate product entries for each color.
               </p>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {[
+                  { name: 'Black', value: '#000000' },
+                  { name: 'White', value: '#FFFFFF' },
+                  { name: 'Red', value: '#DC2626' },
+                  { name: 'Blue', value: '#2563EB' },
+                  { name: 'Green', value: '#16A34A' },
+                  { name: 'Yellow', value: '#EAB308' },
+                  { name: 'Orange', value: '#EA580C' },
+                  { name: 'Purple', value: '#9333EA' },
+                  { name: 'Pink', value: '#EC4899' },
+                  { name: 'Brown', value: '#92400E' },
+                  { name: 'Gray', value: '#6B7280' },
+                  { name: 'Navy', value: '#1E3A8A' },
+                ].map((color) => (
+                  <button
+                    key={color.name}
+                    type="button"
+                    onClick={() => setColors([color.name])}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all ${colors.includes(color.name)
+                        ? 'border-blue-600 bg-blue-50 shadow-lg'
+                        : 'border-slate-200 bg-white hover:border-blue-300 hover:bg-slate-50'
+                      }`}
+                  >
+                    <div
+                      className="w-8 h-8 rounded-full border-2 border-slate-300 shadow-sm flex-shrink-0"
+                      style={{ backgroundColor: color.value }}
+                    />
+                    <span className={`text-sm font-bold ${colors.includes(color.name) ? 'text-blue-900' : 'text-slate-700'
+                      }`}>
+                      {color.name}
+                    </span>
+                  </button>
+                ))}
+              </div>
+              {colors.length === 0 && (
+                <p className="text-sm text-red-600 mt-2">
+                  Please select a color for this product variant
+                </p>
+              )}
             </div>
 
             {/* Product Images */}
@@ -500,8 +482,8 @@ const AddProduct = () => {
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, index)}
                     className={`relative w-24 h-24 border-2 rounded-xl overflow-hidden shadow-lg group cursor-move transition-all ${draggedIndex === index
-                        ? "opacity-50 scale-95 border-blue-500"
-                        : "border-slate-200 hover:border-blue-400"
+                      ? "opacity-50 scale-95 border-blue-500"
+                      : "border-slate-200 hover:border-blue-400"
                       }`}
                   >
                     <Image
