@@ -91,20 +91,6 @@ const AddProduct = () => {
       formData.append("images", file);
     });
 
-    // ⭐ ADD COLOR VARIANTS ⭐
-    if (colorVariants.length > 0) {
-      // Send variant metadata (color names)
-      const variantsMetadata = colorVariants.map(v => ({ color: v.color }));
-      formData.append('colorVariants', JSON.stringify(variantsMetadata));
-
-      // Send variant files with color-specific keys
-      colorVariants.forEach(variant => {
-        variant.files.forEach(file => {
-          formData.append(`variant_${variant.color}`, file);
-        });
-      });
-    }
-
     if (isEditing && files.length === 0) {
       formData.append("existingImages", JSON.stringify(previewImages));
     }

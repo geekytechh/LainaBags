@@ -37,7 +37,6 @@ export async function POST(request) {
         const offerPrice = formData.get('offerPrice');
         const whatsappNumber = formData.get('whatsappNumber');
         const colorsJson = formData.get('colors');
-        const colorVariantsJson = formData.get('colorVariants');
         const isBestseller = formData.get('isBestseller') === 'true';
 
         // Validate required fields
@@ -134,7 +133,6 @@ export async function POST(request) {
             whatsappNumber,
             image,
             colors: colorsJson ? JSON.parse(colorsJson) : [],
-            colorVariants: colorVariants,
             isBestseller: isBestseller,
             date: Date.now()
         })
