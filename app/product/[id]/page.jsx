@@ -14,6 +14,7 @@ const Product = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [productData, setProductData] = useState(null);
   const [isZoomOpen, setIsZoomOpen] = useState(false);
+  const [selectedVariant, setSelectedVariant] = useState(null);
 
   const fetchProductData = async () => {
     const product = products.find((product) => product._id === id);
@@ -51,23 +52,30 @@ const Product = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [productData, currentImageIndex, isZoomOpen]);
 
+  // Reset image index when variant changes
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [selectedVariant]);
+
   if (!productData) return <Loading />;
 
   const discount = Math.round(
     ((productData.price - productData.offerPrice) / productData.price) * 100
   );
 
-  const hasMultipleImages = productData.image && productData.image.length > 1;
+  // Determine which images to display based on selected variant
+  const displayImages = selectedVariant ? selectedVariant.images : productData.image;
+  const hasMultipleImages = displayImages && displayImages.length > 1;
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prev) =>
-      prev === 0 ? productData.image.length - 1 : prev - 1
+      prev === 0 ? displayImages.length - 1 : prev - 1
     );
   };
 
   const handleNextImage = () => {
     setCurrentImageIndex((prev) =>
-      prev === productData.image.length - 1 ? 0 : prev + 1
+      prev === displayImages.length - 1 ? 0 : prev + 1
     );
   };
 
@@ -89,7 +97,7 @@ const Product = () => {
               <div className="mb-4 bg-white rounded-2xl border border-slate-200 p-6 shadow-lg relative group">
                 <div className="relative aspect-square">
                   <Image
-                    src={productData.image[currentImageIndex]}
+                    src={displayImages[currentImageIndex]}
                     alt={productData.name}
                     fill
                     className="object-contain rounded-xl cursor-zoom-in"
@@ -123,7 +131,7 @@ const Product = () => {
               </div>
 
               <div className="grid grid-cols-4 gap-3">
-                {productData.image.map((image, index) => (
+                {displayImages.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => handleImageClick(index)}
@@ -145,6 +153,81 @@ const Product = () => {
 
             {/* Product Details */}
             <div className="flex flex-col">
+              {/* Color Variant Selector */}
+              {productData.colorVariants && productData.colorVariants.length > 0 && (
+                <div className="mb-6 p-5 bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl border-2 border-purple-200">
+                  <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider mb-3">Select Color</h3>
+                  <div className="flex flex-wrap gap-3">
+                    {/* Default/Main Color Button */}
+                    <button
+                      onClick={() => setSelectedVariant(null)}
+                      className={`group flex flex-col items-center gap-2 px-4 py-3 rounded-xl border-2 transition-all ${selectedVariant === null
+                          ? 'border-purple-600 bg-white shadow-lg scale-105'
+                          : 'border-slate-200 bg-white hover:border-purple-300 hover:scale-105'
+                        }`}
+                    >
+                      <div className="relative">
+                        <div
+                          className="w-12 h-12 rounded-full border-2 border-slate-300 shadow-sm"
+                          style={{
+                            backgroundImage: `url(${productData.image[0]})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center'
+                          }}
+                        />
+                        {selectedVariant === null && (
+                          <div className="absolute -top-1 -right-1 w-5 h-5 bg-purple-600 rounded-full flex items-center justify-center">
+                            <CheckCircle2 className="w-3 h-3 text-white" />
+                          </div>
+                        )}
+                      </div>
+                      <span className={`text-xs font-bold ${selectedVariant === null ? 'text-purple-900' : 'text-slate-700'
+                        }`}>
+                        Default
+                      </span>
+                    </button>
+
+                    {/* Color Variant Buttons */}
+                    {productData.colorVariants.map((variant, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setSelectedVariant(variant)}
+                        className={`group flex flex-col items-center gap-2 px-4 py-3 rounded-xl border-2 transition-all ${selectedVariant?.color === variant.color
+                            ? 'border-purple-600 bg-white shadow-lg scale-105'
+                            : 'border-slate-200 bg-white hover:border-purple-300 hover:scale-105'
+                          }`}
+                      >
+                        <div className="relative">
+                          <div
+                            className="w-12 h-12 rounded-full border-2 border-slate-300 shadow-sm"
+                            style={{
+                              backgroundColor: variant.color.startsWith('#')
+                                ? variant.color
+                                : variant.color.toLowerCase()
+                            }}
+                          />
+                          {selectedVariant?.color === variant.color && (
+                            <div className="absolute -top-1 -right-1 w-5 h-5 bg-purple-600 rounded-full flex items-center justify-center">
+                              <CheckCircle2 className="w-3 h-3 text-white" />
+                            </div>
+                          )}
+                        </div>
+                        <span className={`text-xs font-bold ${selectedVariant?.color === variant.color ? 'text-purple-900' : 'text-slate-700'
+                          }`}>
+                          {variant.color}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                  {selectedVariant && (
+                    <p className="text-xs text-purple-700 font-bold mt-3 flex items-center gap-1">
+                      <Package className="w-4 h-4" />
+                      Viewing {selectedVariant.color} variant
+                    </p>
+                  )}
+                </div>
+              )}
+
               {/* Brand */}
               <div className="mb-3">
                 <span className="px-3 py-1 bg-sky-100 border border-sky-200 rounded-full text-xs font-bold tracking-wider text-sky-700 uppercase">
