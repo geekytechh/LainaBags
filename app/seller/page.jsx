@@ -86,6 +86,7 @@ const AddProduct = () => {
     formData.append("offerPrice", offerPrice);
     formData.append("whatsappNumber", whatsappNumber);
     formData.append("colors", JSON.stringify(colors));
+    formData.append("isBestseller", isBestseller);
 
     files.forEach((file) => {
       formData.append("images", file);
