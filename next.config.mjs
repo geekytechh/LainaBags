@@ -12,11 +12,6 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL || "",
   },
-  api: {
-    bodyParser: {
-      sizeLimit: '50mb', // Increased for color variant uploads
-    },
-  },
   experimental: {
     serverActions: {
       bodySizeLimit: '50mb', // Increased for color variant uploads

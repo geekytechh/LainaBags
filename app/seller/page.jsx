@@ -416,7 +416,7 @@ const AddProduct = () => {
                   >
                     <option value="Backpack">Backpack</option>
                     <option value="Laptop Bag">Laptop Bag</option>
-                    <option value="Sling Bag">Hiking Bag</option>
+                    <option value="Hiking Bag">Hiking Bag</option>
                     <option value="Duffel Bag">Duffel Bag</option>
                     <option value="Accessories">Accessories</option>
                     <option value="Complementary Items">Complementary Items</option>

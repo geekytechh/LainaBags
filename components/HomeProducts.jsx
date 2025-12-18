@@ -20,7 +20,7 @@ const HomeProducts = () => {
         const apiUrl = `${baseUrl}/api/product/list`;
         const { data } = await axios.get(apiUrl);
         if (data.success) {
-          const validCategories = ["backpack", "laptop bag", "sling bag", "duffel bag", "gym bag", "accessories"];
+          const validCategories = ["backpack", "laptop bag", "hiking bag", "duffel bag", "gym bag", "accessories"];
           const bagProducts = data.products.filter(
             (product) =>
               validCategories.some(cat => product.category?.toLowerCase().includes(cat)) ||
