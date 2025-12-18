@@ -97,14 +97,14 @@ const HeroSection = () => {
                     <div className="relative z-10 order-1 lg:order-2">
                         {/* Main Image Container */}
                         <div
-                            className="relative w-full h-[360px] md:h-[440px] rounded-3xl overflow-hidden shadow-2xl bg-white border border-slate-200 group p-4"
+                            className="relative w-full max-w-[480px] md:max-w-[520px] lg:max-w-[560px] mx-auto h-[340px] md:h-[420px] lg:h-[480px] rounded-3xl overflow-hidden shadow-2xl bg-white border border-slate-200 group p-4"
                         >
                             <div className="relative w-full h-full">
                                 <Image
                                     src="/images/lappy.jpg"
                                     alt="Laina Bags - Premium Quality Bags"
                                     fill
-                                    className="object-cover"
+                                    className="object-contain"
                                     priority
                                 />
                             </div>
