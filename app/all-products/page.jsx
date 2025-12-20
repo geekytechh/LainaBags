@@ -61,6 +61,7 @@ const AllProducts = () => {
     { id: "backpack", name: "Backpack" },
     { id: "laptop bag", name: "Laptop Bag" },
     { id: "hiking bag", name: "Hiking Bag" },
+    { id: "messenger bag", name: "Messenger Bag" },
     { id: "duffel bag", name: "Duffel Bag" },
     { id: "accessories", name: "Accessories" },
   ];

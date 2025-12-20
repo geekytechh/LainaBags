@@ -48,14 +48,8 @@ const Footer = () => {
 
             {/* Social Links */}
             <div className="flex gap-3">
-              <a href="#" className="w-9 h-9 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white/20 hover:scale-110 transition-all">
-                <Facebook className="w-4 h-4" />
-              </a>
-              <a href="#" className="w-9 h-9 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white/20 hover:scale-110 transition-all">
+              <a href="https://www.instagram.com/lainabagstyle" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white/20 hover:scale-110 transition-all">
                 <Instagram className="w-4 h-4" />
-              </a>
-              <a href="#" className="w-9 h-9 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center hover:bg-white/20 hover:scale-110 transition-all">
-                <Twitter className="w-4 h-4" />
               </a>
             </div>
           </div>
@@ -78,6 +72,7 @@ const Footer = () => {
               <Link href="/all-products?category=backpack" className="block text-blue-200 hover:text-white hover:translate-x-1 transition-all">Backpacks</Link>
               <Link href="/all-products?category=laptop bag" className="block text-blue-200 hover:text-white hover:translate-x-1 transition-all">Laptop Bags</Link>
               <Link href="/all-products?category=hiking bag" className="block text-blue-200 hover:text-white hover:translate-x-1 transition-all">Hiking Bags</Link>
+              <Link href="/all-products?category=messenger bag" className="block text-blue-200 hover:text-white hover:translate-x-1 transition-all">Messenger Bags</Link>
               <Link href="/all-products?category=duffel bag" className="block text-blue-200 hover:text-white hover:translate-x-1 transition-all">Duffel Bags</Link>
             </div>
           </div>
@@ -124,7 +119,7 @@ const Footer = () => {
           </div>
         </div>
       </a>
-    </footer>
+    </footer >
   );
 };
 
